@@ -20,8 +20,15 @@ dependencies = [
     "retry-requests>=2.0.0",
     "h3>=4.4.2",
     "folium>=0.15.1",
+    "holidays>=0.97",
+    "shapely>=2.1.2",
 ]
 
 [tool.uv]
 managed = true
 package = false
+
+[dependency-groups]
+dev = [
+    "nbdime>=4.0.4",
+]
