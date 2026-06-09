@@ -22,6 +22,7 @@ dependencies = [
     "folium>=0.15.1",
     "holidays>=0.97",
     "shapely>=2.1.2",
+    "pyarrow>=24.0.0",
 ]
 
 [tool.uv]
