@@ -20,6 +20,8 @@ dependencies = [
     "retry-requests>=2.0.0",
     "h3>=4.4.2",
     "folium>=0.15.1",
+    "scikit-learn>=1.7.2",
+    "contextily>=1.7.0",
 ]
 
 [tool.uv]
