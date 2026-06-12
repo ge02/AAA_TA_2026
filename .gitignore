@@ -56,7 +56,15 @@ Thumbs.db
 **/*.quarto_ipynb
 
 # data
-data/*
-!data/samples/
-!data/weather/
-!data/geometry/
+
+#ignore files in trips but commit the folder
+data/trips/*
+!data/trips/.gitkeep
+
+#ignore files in merged but commit the folder
+data/merged/*
+!data/merged/.gitkeep
+
+#ignore files in aggregated but commit the folder
+data/aggregated/*
+!data/aggregated/.gitkeep
