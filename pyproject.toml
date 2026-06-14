@@ -26,6 +26,7 @@ dependencies = [
     "shapely>=2.1.2",
     "pyarrow>=24.0.0",
     "config>=0.5.1",
+    "torchinfo>=1.8.0",
 ]
 
 [tool.uv]
