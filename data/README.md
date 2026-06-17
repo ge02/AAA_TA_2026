@@ -4,6 +4,7 @@ This folder is a placeholder for the data. The data is saved on sciebo: https://
 
 To run the code in `notebooks`, download the data from sciebo and store them in this folder.
 
+For testing purposes, sample data is provided in the `samples` folder, which will automatically be used, if the real data isnt downloaded in the correct locations.
 
 # Sources 
 
