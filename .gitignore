@@ -71,3 +71,6 @@ data/aggregated/*
 
 #cache
 .cache.sqlite
+
+# ignore generated files by report
+docs/*
