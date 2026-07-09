@@ -1,14 +1,16 @@
 ---
 title: "Project Report Template" # Give your report a title
 course: "Advanced Analytics and Applications" # Specify the course name
-team: "00" # Specify your team number
+team: "02" # Specify your team number
 author:
-  - name: Student 1
-    student-id: "111111111"
-  - name: Student 2
-    student-id: "222222222"
-  - name: Student 3
-    student-id: "333333333"
+  - name: Anthony Ge
+    student-id: "7381058"
+  - name: Hendrik Mehl
+    student-id: "7410290"
+  - name: ????
+    student-id: "7354459"
+  - name: Yannick Herrmann
+    student-id: "7409728"
 contact: student@smail.uni-koeln.de # Specify one contact for the project
 supervisor: "Univ.-Prof. Dr. Wolfgang Ketter"
 co-supervisor: "Janik Muires" # TA of the course is the co-supervisor
@@ -21,12 +23,26 @@ date: 2026-04-01 # Date of submission
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-{{< include sections/01-introduction.qmd >}}
+{{< include sections/01-problem.qmd >}}
 
-{{< include sections/02-analysis.qmd >}}
+{{< include sections/02-data-description.qmd >}}
+
+{{< include sections/03-preparation.qmd >}}
+
+{{< include sections/04-analytics.qmd >}}
+
+{{< include sections/04a-descriptives.qmd >}}
+
+{{< include sections/04b-predictive-svm.qmd >}}
+
+{{< include sections/04c-predictive-nn.qmd >}}
+
+{{< include sections/04d-reinforcement.qmd >}}
+
+{{< include sections/05-conclusions.qmd >}}
+
+{{< include sections/appendix.qmd >}}
+\clearpage
 
 # Citations and References
 You can easily cite your sources using BibLaTeX. For example, you can cite the Quarto documentation [@quarto2024] or a textbook like "R for Data Science" [@wickham2023]. The bibliography will be automatically generated at the end of the document.
-
-# Conclusion
-The conclusion should summarize your findings and suggest future work.
