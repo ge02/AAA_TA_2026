@@ -1,0 +1,33 @@
+
+# Data Preparation
+Before analysis, each dataset underwent a series of preparation steps to ensure 
+data quality and compatibility across sources.
+
+## Trip Data
+The dataset was first inspected to get an overview of the datatypes and find
+potential issues. This revealed that several numeric columns were incorrectly stored as strings 
+and that the timestamp columns were not yet in datetime format. Both were corrected during preprocessing.
+Additionally, the dataset contained no duplicated rows or trip identifiers. Furthermore, several implausible
+trips were identified and removed during cleaning. These included trips with zero or negative distance (528447 trips) and trips with a 
+duration of less than 60 seconds (381488 trips), as these trips are likely erroneous. Overlapping trips with the same taxi identifier 
+were also removed (28320 trips) based on the assumption that these result from recording errors.
+Price attributes were also validated by checking for and removing trips with zero or negative fares (1455 trips) and whether there are 
+negative tips, tolls or extras (0 trips). 
+
+The dataset was also 
+checked for missing values, revealing that 0.18% of the 
+non-spatial data was missing. Due to the negligable share, these rows were dropped. Because of privacy reasons, 
+the spatial data showed many more missing values with census tract data missing for approximately 55% of trips. 
+In these cases, the less granular community area is recorded instead, meaning spatial information is always 
+available at either the census tract or community area level [TRUE ???]. 
+
+The numeric columns were checked for outliers using boxplots (@fig-trip-outlier-boxplot) and removed using 
+the z-score as a statistical solution. Observations with a z-score exceeding a threshhold of 2 in any numeric 
+column were considered outliers and removed. [REASON]. This resulted in 444102 rows, or 7.18%
+of the data at that point being removed, which was seen as acceptable since the remaining set still contained roughly 
+5.7 million rows.
+
+[CONTINUE]
+
+
+## Supplementary Data

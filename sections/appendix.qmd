@@ -1,0 +1,10 @@
+
+# Appendix
+
+<!-- data description figures -->
+![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns}
+
+![Weather Data Columns](assets/weather_info.png){#fig-weather-columns}
+
+<!-- data preparation figures -->
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
