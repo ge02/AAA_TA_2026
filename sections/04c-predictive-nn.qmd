@@ -1,3 +1,48 @@
+## Prediction using Neural Networks
 
-## Analysis using Neural Networks
-test
+As a second predictive approach we employ feed-forward neural networks (NNs) to forecast taxi demand, i.e. the number of pickups per spatial unit and time bucket. NNs are well suited to this task: demand is driven by strongly non-linear interactions between location, time of day, calendar effects and local context (points of interest, weather), and a network learns these interactions directly from the feature vector without manual interaction terms. In addition, the high-cardinality spatial identity of a cell can be encoded compactly through a jointly trained embedding, and the output layer can be matched to the count nature of the target through an appropriate likelihood. All models are evaluated against the benchmarks introduced above, most importantly the historical-mean predictor (mean `trip_count` per cell × hour-of-day in the training period), which turns out to be a demanding baseline.
+
+### Expectations
+
+Before training we formulated five hypotheses. (1) The NNs should clearly beat the linear ridge benchmark, since demand response to hour, location and weather is non-linear. (2) They should at least match the historical-mean benchmark — which they can only do by learning the cell × hour interaction — and surpass it by exploiting information the lookup table cannot use (weekday, holidays, weather deviations). (3) More capacity (deeper: 8 layers; wider: 256 units) should help at most moderately over the small baseline, with the deep variant at risk of optimization instabilities. (4) The NN advantage should be largest at fine temporal granularity, where many training samples exist and day-to-day fluctuation matters, and shrink or vanish at daily buckets, where the data volume collapses and the stable mean pattern dominates. (5) Hyperparameters — the learning rate above all — should matter more than architecture choice.
+
+### NN Architectures
+
+Three fully connected architectures are compared, identical in everything but capacity: a **baseline** (2 hidden layers × 64 units), a **deeper** model (8 × 64) and a **wider** model (2 × 256), with ReLU activations (a sigmoid variant is tested as an ablation) and He/Xavier initialization matched to the activation. The input is the standardized feature vector (22 features after the correlation- and importance-based selection described earlier: cyclic time encodings, calendar flags, weather, POI densities and distance features). For the hexagon models, cell identity enters through a 16-dimensional learned embedding (`nn.Embedding`, dimension chosen by a small search over {8, 16, 32}) concatenated to the features; unseen cells map to a reserved unknown index. The output is a single neuron: under the final count likelihood it is an unconstrained log-rate, which guarantees strictly positive demand predictions after exponentiation.
+
+### Training and Optimization
+
+Models are trained with AdamW (decoupled weight decay), batch size 1024, at most 200 epochs, and early stopping on validation loss (patience 10) on a chronological 70/15/15 train/validation/test split; for the hourly hexagon data this amounts to 202k/43k/43k observations.
+
+The training objective evolved in three deliberate steps. An initial MSE on log1p-transformed counts trained stably but systematically underpredicted busy cells: the back-transformation of a log-space mean is biased low (Jensen's inequality), which is punished exactly where the R² metric is decided. Switching to a Poisson negative log-likelihood on raw counts removed this retransformation bias, but the Poisson assumption of equidispersion (variance = mean) is clearly violated — taxi counts are overdispersed, since unmodelled events and weather shocks move demand in clumps. The final objective is therefore a **negative binomial (NB2) NLL** with a jointly learned dispersion parameter, Var$(y) = \mu + \mu^2/\theta$, which retains the exponential link and the unbiased conditional-mean estimation (in the quasi-likelihood sense) while modelling the excess variance explicitly.
+
+Learning rate and weight decay were tuned per architecture by grid search on the validation loss, iteratively re-centering any grid whose optimum landed on an edge. Two practical lessons are worth recording: the count likelihoods require learning rates two to three orders of magnitude larger than the MSE setup (order $10^{-3}$–$10^{-1}$ instead of $10^{-5}$), and at too-large rates the exponential link makes training fail catastrophically rather than gracefully — a single oversized step overflows the rate and the loss becomes NaN. The training harness therefore detects divergence and ranks such configurations last instead of aborting the search. Evaluation uses R², MAE and NRMSE on the raw count scale, complemented by the deviance-based D² — the likelihood-native analogue of R², which is robust to the few extreme predictions that can dominate squared errors under an exponential link.
+
+### Model Comparison
+
+The table reports test-set R² and MAE of the historical-mean benchmark and the best tuned NN per configuration (NB2 loss unless stated otherwise).
+
+| Spatial unit | Bucket | Benchmark R² (MAE) | Best NN R² (MAE) | Best model |
+|---|---|---|---|---|
+| Hex (H3 res 6) | 1 h | 0.833 (7.24) | **0.849 (6.40)** | deeper, tuned |
+| Hex (H3 res 6) | 2 h | 0.840 (13.88) | **0.880 (11.83)** | deeper, tuned |
+| Hex (H3 res 6) | 6 h | **0.858** (38.81) | 0.845 (36.41) | wider, tuned (Poisson) |
+| Hex (H3 res 6) | 24 h | **0.876** (132.3) | 0.10 (203.1) | deeper, tuned |
+| Community areas | 1 h | — | 0.851 (3.07) | baseline, tuned |
+| Community areas | 2 h | — | 0.834 (6.02) | deeper, tuned |
+| Community areas | 6 h | — | 0.788 (18.93) | deeper, tuned |
+| Community areas | 24 h | — | 0.727 (76.60) | deeper, tuned |
+
+Four findings stand out. **First, tuning dominates architecture**, confirming hypothesis (5): at the untuned default learning rate all architectures land far below their tuned counterparts, and the deep model occasionally produces strongly negative R² through a handful of exploded predictions — while its D² stays around 0.85, illustrating that these are tail artefacts of the exponential link rather than globally broken models. **Second**, the granularity pattern matches hypothesis (4): the NNs beat the historical mean clearly at 1–2 h buckets, roughly tie at 6 h (better MAE, worse R²), and fail at 24 h, where only ≈8k training rows remain — too few for a network, while the lookup benchmark keeps improving as averaging horizons grow. **Third**, capacity helps only after tuning: the tuned deeper model is the strongest configuration at fine granularity, but it is also the most fragile one untuned. **Fourth**, two ablations behaved consistently with the earlier feature analysis: removing the weather block at 2 h did not hurt performance (weather had near-zero permutation importance), and the sigmoid activation matched ReLU at 1 h despite the classic vanishing-gradient concern.
+
+### Exemplary Walkthrough (H3 Resolution 6, Hourly Buckets)
+
+The hourly hexagon configuration illustrates the full pipeline. The dataset covers 33 hexagons over 289k cell-hours; 35.8 % of test rows have zero demand, and the mean test demand is 17.6 trips. After the chronological split, the 22 selected features are standardized with statistics fitted on the training split only, targets remain raw counts for the NB likelihood, and the hexagon embedding vocabulary is built from the training split. The benchmarks frame the task: ridge reaches R² = 0.59 — beaten by every tuned network, confirming hypothesis (1) — while the historical mean sets the real bar at R² = 0.833, MAE = 7.24.
+
+An untuned baseline network (learning rate $5\cdot10^{-5}$) reaches only R² ≈ 0.78: it has learned the broad pattern but is undertrained. Grid search moves the baseline's optimum to a learning rate of 0.04 with weight decay $5\cdot10^{-3}$, lifting the tuned baseline to R² = 0.834 — statistically level with the benchmark. The tuned deeper model (learning rate $6\cdot10^{-3}$, weight decay $3\cdot10^{-3}$) surpasses it at **R² = 0.849 with MAE = 6.40**, an ≈12 % lower mean error than the benchmark, achieved precisely where the lookup table is blind: day-to-day deviations from the average hex-hour pattern.
+
+### Conclusion of the NNs and Interpretation for the Business Case
+
+Neural networks add genuine predictive value exactly at the granularity the business case needs. For operational fleet management — repositioning idle taxis, planning driver shifts, anticipating local demand surges — hourly to two-hourly forecasts at hexagon level are the actionable resolution, and there the tuned networks beat a strong memorization benchmark by 1.6–4 R² points and 12–15 % MAE. An average error of ≈6.4 trips per hexagon-hour against a mean demand of 17.6 is precise enough to rank cells for repositioning decisions, and the strictly positive count predictions of the NB model are directly interpretable as expected pickups.
+
+The comparison also delimits where NNs are *not* the right tool: at 6-hour and daily aggregation the historical mean is equally good or better, costs nothing to compute, and remains fully interpretable — for tactical planning at these horizons it should simply be used instead. Three caveats qualify the NN results: they are contingent on careful learning-rate tuning per configuration (untuned networks were uniformly worse than the free benchmark); most runs use a single seed, so small R² differences should not be over-read; and while the NB2 likelihood addresses overdispersion in the mean model, we deliberately make no distributional claims (e.g. exact zero-demand probabilities) from it. For deployment we therefore recommend a pragmatic hybrid: the historical hex-hour mean as an always-available fallback — or, in future work, as an input feature — with the tuned NB network supplying the fine-grained corrections that translate weather, calendar and recent context into actionable hourly demand estimates.
