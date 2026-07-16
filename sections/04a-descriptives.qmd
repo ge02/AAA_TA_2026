@@ -1,3 +1,29 @@
 
 ## descriptive analysis
-test
+Taxi demand patterns were analyzed across multiple spatial resolutions
+
+### spatial analysis
+Visualizing trips at different spatial resolutions (community areas and H3 hexagons 6 and 7) shows how trip demand is heavily concentrated in the downtown and in the northwest at the O'Hare Airport 
+(@fig-demand-by-spatial-unit-h3,@fig-demand-by-spatial-unit-ca). This makes sense due to the high concentration of offices, hotels, restaurants and other points of interest in the downtown area and 
+taking into account that the O'Hare Airport is one of the busiest in the world. This same pattern can also be seen when analyzing demand through a kernel density estimation (@fig-trips-KDE). Visualizing 
+the KDE at different times during the day does not show any significant changes to the pattern (@fig-trips-KDE-tod).
+The contrast between these high-demand zones and the rest of the city is visible in all spatial resolutions. There is no noticeable 
+difference when comparing demand patterns between pickup and dropoff coordinates, which is expected, since [REASON].
+Additionally, multiple trip attributes were spatially visualized at the same spatial resolutions. Visualizing the average fare (@fig-price-by-spatial-unit-h3, @fig-price-by-spatial-unit-ca) and Trip Miles 
+(@fig-miles-by-spatial-unit-h3, @fig-miles-by-spatial-unit-ca) per trip shows a very similar pattern, which is expected, since trip distance directly affects the price. 
+They are both highest for pickups at O'Hare airport (northwest), which makes intuitive sense, since passengers flying into Chicago are typically traveling to hotels, offices, or residences spread 
+across the city, resulting in long trips. The Midway airport in the southwest shows a similar but less pronounced effect. The downtown core shows consistently short pickup distances and lower prices, reflecting 
+short urban trips between nearby destinations within the city center. This contrast between airport and downtown is more pronounced in the pickup maps than the dropoff maps. A very similar pattern can be observed
+when visualizing trip duration (@fig-duration-by-spatial-unit-h3, @fig-duration-by-spatial-unit-ca).
+Displaying the average idle time shows highest values around the two airports (@fig-idle-by-spatial-unit-h3, @fig-idle-by-spatial-unit-ca). Airport pickups are regulated through 
+designated taxi holding lots where drivers must queue and wait for dispatch, artificially inflating idle time compared to city street hailing where drivers can cruise actively. The dropoff maps 
+show no comparable hotspots. Drivers dropping off at the airport immediately join the holding queue, but passengers picked up at the airport are distributed across the entire 
+city, so no single dropoff zone accumulates unusual idle time. Additionally, the tip rate (tips/fare) was spatially analyzed (@fig-tips-by-spatial-unit-h3, @fig-tips-by-spatial-unit-ca). The tip rate is highest for pickups at O'Hare, 
+aligning with the trip distance finding. Airport passengers taking long trips tend to tip more generously, possibly because the fare is higher and tipping feels more expected 
+for longer journeys. Midway airport shows a similar effect. Additionally, downtown shows an increased tip-rate. This reflects the demographic of passengers in that area, which 
+include Tourists, business travelers, and higher-income residents who predominantly tip more generously. Spatially comparing the trip start times between pickup and dropoff also shows an interesting 
+pattern (@fig-start-time-by-spatial-unit-h3, @fig-start-time-by-spatial-unit-ca). It shows how the airports stand out as having very late average staring hours compared to the rest of the city (ca. 17:00pm), 
+while, looking at trip dropoffs, the airports stand out as having the earliest start hours. Additionally, when examining the dropoff maps, it stands out that there is a high concentration of late trips in the northern pattern 
+of chicago, which may be attributed to the higher concentration of destinations like restaurants.
+
+### other analysis
