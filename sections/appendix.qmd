@@ -22,7 +22,8 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-by-location-data >}}
 
-<!-- data analysis figures -->
+<!-- 4 data analysis figures -->
+<!-- 1spatial -->
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
@@ -54,3 +55,28 @@
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
+
+<!-- 2other -->
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
+
