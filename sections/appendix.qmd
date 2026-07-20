@@ -8,3 +8,15 @@
 
 <!-- data preparation figures -->
 {{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
+
+<!-- predicitve svm -->
+
+![Grid Search Results](assets/grid_search.png){#fig-grid-search}
+
+![Model Results](assets/model_results.png){#fig-model-results}
+
+![Hurdle Results](assets/hurdle_results.png){#fig-hurdle-results}
+
+![Spatio-temporal model comparison ($R^2$)](assets/model_comparison_r_squared.png){#fig-model-comparison-r-squared}
+
+![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
