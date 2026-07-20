@@ -8,3 +8,96 @@
 
 <!-- data preparation figures -->
 {{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
+
+
+![Trip distribution plots for H3 hexagons at multiple levels](assets/H3-distribution-plots.png){#fig-H3-distribution-plots}
+
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
+
+![Trip distribution for H3 Hexagons: centroids vs area-weighted](assets/H3-centroid-vs-area-weighted.png){#fig-H3-centroid-vs-area-weighted}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-census-tract-2000-vs-2010 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-by-location-data >}}
+
+<!-- 4 data analysis figures -->
+
+<!-- 4a descriptive -->
+<!-- 4a1 spatial -->
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
+
+![Spatial KDE of Taxi Pickup Demand](assets/KDE-general.png){#fig-trips-KDE}
+
+![Spatial KDE of Taxi Pickup Demand by Time of Day](assets/KDE-tod.png){#fig-trips-KDE-tod}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-ca >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-ca >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-ca >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-ca >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-ca >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
+
+<!-- 4a2 other -->
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
+
+<!-- predicitve svm -->
+
+![Grid Search Results](assets/grid_search.png){#fig-grid-search}
+
+![Model Results](assets/model_results.png){#fig-model-results}
+
+![Hurdle Results](assets/hurdle_results.png){#fig-hurdle-results}
+
+![Spatio-temporal model comparison ($R^2$)](assets/model_comparison_r_squared.png){#fig-model-comparison-r-squared}
+
+![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
+
+
+<!-- reinforcement learning figures -->
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-regret >}}
