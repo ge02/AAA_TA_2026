@@ -20,3 +20,11 @@
 ![Spatio-temporal model comparison ($R^2$)](assets/model_comparison_r_squared.png){#fig-model-comparison-r-squared}
 
 ![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
+
+
+<!-- reinforcement learning figures -->
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-regret >}}
