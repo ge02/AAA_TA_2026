@@ -23,7 +23,9 @@
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-by-location-data >}}
 
 <!-- 4 data analysis figures -->
-<!-- 1spatial -->
+
+<!-- 4a descriptive -->
+<!-- 4a1 spatial -->
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
@@ -56,7 +58,7 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
 
-<!-- 2other -->
+<!-- 4a2 other -->
 
 {{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
 
@@ -80,3 +82,22 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
 
+<!-- predicitve svm -->
+
+![Grid Search Results](assets/grid_search.png){#fig-grid-search}
+
+![Model Results](assets/model_results.png){#fig-model-results}
+
+![Hurdle Results](assets/hurdle_results.png){#fig-hurdle-results}
+
+![Spatio-temporal model comparison ($R^2$)](assets/model_comparison_r_squared.png){#fig-model-comparison-r-squared}
+
+![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
+
+
+<!-- reinforcement learning figures -->
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-regret >}}

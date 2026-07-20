@@ -7,7 +7,7 @@ author:
     student-id: "7381058"
   - name: Hendrik Mehl
     student-id: "7410290"
-  - name: ????
+  - name: Niklas Eichholz
     student-id: "7354459"
   - name: Yannick Herrmann
     student-id: "7409728"
