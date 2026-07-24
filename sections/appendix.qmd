@@ -25,59 +25,59 @@
 <!-- 4 data analysis figures -->
 <!-- 4.1 descriptive -->
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_05_Kernel_Density_Estimation.ipynb#fig-trips-kde >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Kernel_Density_Estimation.ipynb#fig-trips-kde >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_05_Kernel_Density_Estimation.ipynb#fig-trips-kde-tod >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Kernel_Density_Estimation.ipynb#fig-trips-kde-tod >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
 
 <!-- 4.2 predictive svm -->
 
