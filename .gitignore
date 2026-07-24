@@ -64,6 +64,10 @@ data/merged/*
 data/aggregated/*
 !data/aggregated/.gitkeep
 
+#ignore files in results but commit the folder
+data/results/*
+!data/results/.gitkeep
+
 #cache
 .cache.sqlite
 

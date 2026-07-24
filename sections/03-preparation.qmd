@@ -1,8 +1,3 @@
-
-# Data Preparation
-Before analysis, each dataset underwent a series of preparation steps to ensure 
-data quality and compatibility across sources.
-
 ## Trip Data
 The dataset was first inspected to get an overview of the datatypes and find
 potential issues. This revealed that several numeric columns were incorrectly stored as strings 
@@ -34,10 +29,10 @@ Second, trips starting or ending outside of Chicago (@fig-trips-outside-chicago)
 Third, a crosswalk between 2010 census tracts and community areas was constructed using largest-area overlap, assigning each tract 
 to the community area covering the greatest share of its area. 2010 census tract data was used because the taxi trip data uses 2010 census tract IDs, avoiding census tracts appearing like they 
 had zero trips (@fig-census-tract-2000-vs-2010). Missing community areas were then filled using this crosswalk (@fig-community-area-distribution). Additionally, H3 
-hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-H3-distribution-plots). 5 was too coarse (only 8 hexagons for Chicago) and 8 implied more spatial precision than 
+hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-h3-distribution-plots). 5 was too coarse (only 8 hexagons for Chicago) and 8 implied more spatial precision than 
 the data supports given that coordinates are community area or census tract centroids. Based on that, hexagon IDs at resolution 6 
 and 7 were assigned to each row using area-weighted mapping within each community area, ensuring hexagon cells never cross community area or city boundaries. Area-weighted mapping was 
-chosen because directly assigning trips to hexagons using the centroid coordinates results in many hexagons having zero trips (@fig-H3-centroid-vs-area-weighted). 
+chosen because directly assigning trips to hexagons using the centroid coordinates results in many hexagons having zero trips (@fig-h3-centroid-vs-area-weighted). 
 Finally, together with the weather dataset, a merged dataset based on the starting hour of the trip was created.
 
 ## Supplementary Data

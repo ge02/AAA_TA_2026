@@ -1,31 +1,30 @@
 
 # Appendix
 
-<!-- data description figures -->
+<!-- 2 data description figures -->
 ![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns}
 
 ![Weather Data Columns](assets/weather_info.png){#fig-weather-columns}
 
-<!-- data preparation figures -->
-{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
-
-
-![Trip distribution plots for H3 hexagons at multiple levels](assets/H3-distribution-plots.png){#fig-H3-distribution-plots}
-
-{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
-
-![Trip distribution for H3 Hexagons: centroids vs area-weighted](assets/H3-centroid-vs-area-weighted.png){#fig-H3-centroid-vs-area-weighted}
-
-{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-census-tract-2000-vs-2010 >}}
-
-{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
+<!-- 3 data preparation figures -->
 
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-by-location-data >}}
 
-<!-- 4 data analysis figures -->
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
 
-<!-- 4a descriptive -->
-<!-- 4a1 spatial -->
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-census-tract-2000-vs-2010 >}}
+
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
+
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-h3-distribution-plots >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-h3-centroid-vs-area-weighted >}}
+
+<!-- 4 data analysis figures -->
+<!-- 4.1 descriptive -->
+
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
@@ -58,8 +57,6 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
 
-<!-- 4a2 other -->
-
 {{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
@@ -82,7 +79,7 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
 
-<!-- predicitve svm -->
+<!-- 4.2 predictive svm -->
 
 ![Grid Search Results](assets/grid_search.png){#fig-grid-search}
 
@@ -95,7 +92,11 @@
 ![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
 
 
-<!-- reinforcement learning figures -->
+<!-- 4.5 reinforcement learning figures -->
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-mdp >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-curves >}}
 
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}

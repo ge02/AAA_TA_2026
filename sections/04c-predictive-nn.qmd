@@ -38,6 +38,26 @@ metrics reported below can be compared across all time buckets.
 The table below shows the best network for each combination of spatial and temporal resolution, against its direct competitor, the
 historical average. Bold marks the winner on each metric.
 
+
+|Resolution|Model|Loss|MAE|RMSE|R²|MAPE|
+|---|---|---|---|---|---|---|
+|CA — 1h|**deep_tuned**|NB2|**3.16**|**13.20**|**0.836**|**61.1**|
+|CA — 1h|_Historical mean_|—|3.48|13.92|0.817|70.4|
+|CA — 2h|**baseline_tuned**|NB2|**5.59**|**24.77**|**0.853**|**60.2**|
+|CA — 2h|_Historical mean_|—|6.54|26.95|0.825|78.7|
+|CA — 6h|**baseline_tuned**|NB2|**16.35**|74.06|0.840|**67.0**|
+|CA — 6h|_Historical mean_|—|17.87|**72.68**|**0.846**|85.2|
+|CA — 24h|**baseline_tuned**|MAE|55.03|222.99|0.872|**43.8**|
+|CA — 24h|_Historical mean_|—|**53.67**|**203.11**|**0.894**|69.5|
+|Hex-6 — 1h|**deep_tuned**|NB2|**6.23**|**20.32**|**0.869**|**66.3**|
+|Hex-6 — 1h|_Historical mean_|—|7.24|22.94|0.833|84.6|
+|Hex-6 — 2h|**deep_tuned**|NB2|**12.10**|**41.64**|**0.860**|**57.9**|
+|Hex-6 — 2h|_Historical mean_|—|13.88|44.52|0.840|86.0|
+|Hex-6 — 6h|**deep_tuned**|NB2|**36.40**|128.24|0.839|**57.8**|
+|Hex-6 — 6h|_Historical mean_|—|38.81|**120.15**|**0.858**|80.8|
+|Hex-6 — 24h|**deep_tuned**|MAE|**110.91**|358.36|0.888|**39.1**|
+|Hex-6 — 24h|_Historical mean_|—|115.95|**329.77**|**0.905**|64.2|
+
 _Test-set metrics for the best tuned network per configuration versus the historical-average benchmark._
 
 Three findings stand out: 
