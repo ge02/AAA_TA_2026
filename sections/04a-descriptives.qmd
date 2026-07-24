@@ -5,8 +5,8 @@ Taxi demand patterns were analyzed across multiple spatial resolutions
 <!-- spatial analysis -->
 Visualizing trips at different spatial resolutions (community areas and H3 hexagons 6 and 7) shows how trip demand is heavily concentrated in the downtown and in the northwest at the O'Hare Airport 
 (@fig-demand-by-spatial-unit-h3,@fig-demand-by-spatial-unit-ca). This makes sense due to the high concentration of offices, hotels, restaurants and other points of interest in the downtown area and 
-taking into account that the O'Hare Airport is one of the busiest in the world. This same pattern can also be seen when analyzing demand through a kernel density estimation (@fig-trips-KDE). Since the dataset only provides each trip's community-area centroid, we improved the KDE by scattering each area's trips uniformly at random within its polygon before smoothing. Visualizing
-the KDE at different times during the day does not show any significant changes to the pattern (@fig-trips-KDE-tod).
+taking into account that the O'Hare Airport is one of the busiest in the world. This same pattern can also be seen when analyzing demand through a kernel density estimation (@fig-trips-kde). Since the dataset only provides each trip's community-area centroid, we improved the KDE by scattering each area's trips uniformly at random within its polygon before smoothing. Visualizing
+the KDE at different times during the day does not show any significant changes to the pattern (@fig-trips-kde-tod).
 The contrast between these high-demand zones and the rest of the city is visible in all spatial resolutions. There is no noticeable 
 difference when comparing demand patterns between pickup and dropoff coordinates, which is expected, since every pickup must correspond to a dropoff, so demand is symmetric across origins and destinations.
 Additionally, multiple trip attributes were spatially visualized at the same spatial resolutions. Visualizing the average fare (@fig-price-by-spatial-unit-h3, @fig-price-by-spatial-unit-ca) and Trip Miles 
