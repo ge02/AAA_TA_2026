@@ -1,3 +1,12 @@
 
 # Conclusion
-conclusion text
+
+The tuned networks beat the plain historical-average lookup on average error at every resolution **except CA-24h**, where the benchmark wins on MAE, RMSE and $R^2$ alike. So the networks do add value — but not universally. And even where they lead, that alone does not mean the client should implement them. Whether the gain is _worth implementing_ is a cost question no significance test can answer, and it turns on how large and how stable that edge actually is.
+
+The size of the edge is **unstable across time buckets**. The reduction in average error is roughly 9–15 % at 1 h and 2 h, shrinks to about 6–9 % at 6 h, and at 24 h collapses to around 4 % for hexagons and turns _negative_ for community areas. Beyond 2 h the picture is mixed on every other metric too: the lookup reclaims RMSE and $R^2$ at 6 h and 24 h, leaving the network with an average-error advantage only, against a benchmark that costs nothing to run.
+
+For repositioning idle taxis, planning shifts and anticipating local surges, the actionable resolution is the hourly-to-two-hourly hexagon forecast — and that is exactly where the networks earn their keep: an average miss of 6.23 versus 7.24 trips at 1 h, and 12.10 versus 13.88 at 2 h, against an average demand of about 17.6 trips. The negative binomial setup also means every output is a positive number that can be read directly as expected pickups, with no post-processing required.
+
+Which architecture wins depends on both how much data is available and which spatial unit is used. On the hexagon grid the deeper model wins at every time bucket; on community areas it wins only at 1 h, with the simpler baseline taking over from 2 h onward. This fits a straightforward **data-sparsity** explanation: with fewer observations, the underlying pattern is not pinned down clearly enough, so a high-capacity model ends up fitting the random quirks of the sample rather than the real signal. With more data the pattern sharpens and the larger models can exploit it. The practical upshot is that **there is no single best model across both dimensions**, and different time buckets serve different purposes: 1 h and 2 h forecasts suit real-time fleet rebalancing, while 6 h and 24 h forecasts are more useful for financial planning. The model should therefore be chosen to fit the use case, rather than the use case being chosen to fit the best-scoring model.
+
+Weighing cost against benefit makes the recommendation concrete: the benefit is real but bounded and uneven across time buckets, while the costs are not. Each configuration requires its own two-stage parameter search to build, and the exponential output makes an untuned model fragile enough to fail badly.
