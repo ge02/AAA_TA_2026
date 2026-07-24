@@ -37,7 +37,9 @@ date: 2026-04-01 # Date of submission
 
 {{< include sections/04c-predictive-nn.qmd >}}
 
-{{< include sections/04d-reinforcement.qmd >}}
+{{< include sections/04d-comparison-svm-nn.qmd >}}
+
+{{< include sections/04e-reinforcement.qmd >}}
 
 {{< include sections/05-conclusions.qmd >}}
 

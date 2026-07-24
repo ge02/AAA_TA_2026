@@ -72,5 +72,5 @@ docs/*
 # Exception for partials tex files
 !partials/*.tex
 # Exception for final outputs
-# !docs/report.pdf
-!docs/report.html
+# docs/report.pdf
+# !docs/report.html
