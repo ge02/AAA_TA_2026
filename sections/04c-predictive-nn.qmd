@@ -8,7 +8,6 @@ The most consequential choice is the training objective, because demand is over-
 
 Learning rate and weight decay are tuned per architecture by a two-stage grid search. First, a sweep over `2e-5`–`8e-2` locates the right decade, then a fine sweep within it. Overfitting is held in check by that decoupled weight decay and by early stopping on validation loss (patience 10, best-weight restoration). The data are split 70/15/15 into train/validation/test sets. The split is positional (`shuffle=False`), so validation and test are the tail of the dataframe rather than a random draw despite the `SPLIT="random"` label in the code.
 
-### Model comparison — NNs
 
 In the following a table with the performance metrics of the best model of each spatial resolution – temporal resolution combination is presented against its direct competitor, the historical mean benchmark.
 
@@ -40,7 +39,6 @@ depends on spatial unit as well as granularity: the tuned deep model is stronges
 community-area buckets (2 h, 6 h, 24 h) the tuned baseline takes over. Untuned, the deep and wide models are the most fragile.
 
 
-### Conclusion and interpretation for the business case
 
 The tuned networks beat the plain historical-average lookup on MAE at every resolution **except CA-24h**, where the benchmark is better on MAE, RMSE and $R^2$ alike. So the Neural Networks do add value to the predictions, but not universally. And even where they lead, that alone does not mean the client should implement them. Whether the gain is *worth implementing* is a cost question the significance tests cannot answer, and it turns on how large and how stable that edge actually is.
 
