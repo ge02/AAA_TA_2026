@@ -1,5 +1,5 @@
 
-# Problem description
+# Problem Description
 The smart mobility market is highly competitive, and current reports indicate that ride-hailing, specifically with autonomous and electric vehicles will dominate it in the near future. This development opens a substantial opportunity for traditional car manufacturers to move beyond vehicle sales and establish themselves as competitive mobility service providers.
 
 Our client, a renowned German car manufacturer, seeks to enter the US ride-hailing market with a fully electrified fleet. The client, however, lacks operational expertise in managing electric vehicle fleets in an urban ride-hailing context. Several challenges follow directly from that gap: how to reduce energy costs, how to manage fleet charging schedules, and how to rebalance and relocate vehicles, all reactively in real time and proactively in advance.

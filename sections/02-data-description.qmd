@@ -1,5 +1,5 @@
 
-# Data description
+# Data Description
 To approach this task, data from multiple sources was used.
 The primary dataset used in this analysis is the Chicago Taxi Trips dataset [@chicago_taxi_2024], 
 which is publicly available via the Chicago Data Portal and contains taxi trips from 2024 onwards. The Taxi Trip Dataset contains one trip per row, 
