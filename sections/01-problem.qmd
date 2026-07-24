@@ -9,5 +9,5 @@ Each of these questions reduces to the same underlying ability: knowing where an
 To address this, we analyze historical taxi trip data from Chicago as a proxy for ride-hailing demand, in three stages.
 First, a descriptive analysis examines how taxi demand varies across spatial and temporal resolutions, establishing a broad picture of the relationships between variables in the data.
 Second, we build predictive models that forecast trip demand, for example, expected demand on a Sunday morning in the city outskirts, enabling the client to shape its operational strategy e.g. where to deploy additional vehicles.
-Third, we develop an **intelligent charging strategy** using reinforcement learning to minimize charging costs while ensuring sufficient vehicle range.
+Third, we develop an intelligent charging strategy using reinforcement learning to minimize charging costs while ensuring sufficient vehicle range.
 Together, these analyses enable the client to make data-driven decisions on fleet deployment, driver scheduling, and charging infrastructure investment.

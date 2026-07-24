@@ -1,6 +1,5 @@
 
 ## Descriptive Analysis
-Taxi demand patterns were analyzed across multiple spatial resolutions
 
 <!-- spatial analysis -->
 Visualizing trips at different spatial resolutions (community areas and H3 hexagons 6 and 7) shows how trip demand is heavily concentrated in the downtown and in the northwest at the O'Hare Airport 
@@ -11,7 +10,7 @@ The contrast between these high-demand zones and the rest of the city is visible
 difference when comparing demand patterns between pickup and dropoff coordinates, which is expected, since every pickup must correspond to a dropoff, so demand is symmetric across origins and destinations.
 Additionally, multiple trip attributes were spatially visualized at the same spatial resolutions. Visualizing the average fare (@fig-price-by-spatial-unit-h3, @fig-price-by-spatial-unit-ca) and Trip Miles 
 (@fig-miles-by-spatial-unit-h3, @fig-miles-by-spatial-unit-ca) per trip shows a very similar pattern, which is expected, since trip distance directly affects the price. 
-They are both highest for pickups at O'Hare airport (northwest), which makes intuitive sense, since passengers flying into Chicago are typically traveling to hotels, offices, or residences spread 
+They are both highest for pickups at O'Hare airport, which makes intuitive sense, since passengers flying into Chicago are typically traveling to hotels, offices, or residences spread 
 across the city, resulting in long trips. The Midway airport in the southwest shows a similar but less pronounced effect. The downtown core shows consistently short pickup distances and lower prices, reflecting 
 short urban trips between nearby destinations within the city center. This contrast between airport and downtown is more pronounced in the pickup maps than the dropoff maps. A very similar pattern can be observed
 when visualizing trip duration (@fig-duration-by-spatial-unit-h3, @fig-duration-by-spatial-unit-ca).

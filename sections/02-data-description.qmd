@@ -15,7 +15,7 @@ Points-of-Interest data for Chicago was gathered from OpenStreetMap via the Over
 bars and clubs, hotels, hospitals, universities, and tourist attractions. These raw POI locations are subsequently aggregated into distance and density features for multiple spatial resolutions
 during data preparation.
 
-In order to be able to analyse the data on census tract and community area level, additional geometry data containing the shapes of these areas was obtained from <!--TODO: add citation -->. These datasets contain the geometry
+In order to be able to analyse the data on census tract and community area level, additional geometry data containing the shapes of these areas was obtained. These datasets contain the geometry
 for Chicago's 77 community areas and 878 census tracts.
 
 
