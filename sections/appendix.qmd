@@ -18,9 +18,9 @@
 
 {{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
 
-![Trip distribution plots for H3 hexagons at multiple levels](assets/H3-distribution-plots.png){#fig-H3-distribution-plots}
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-h3-distribution-plots >}}
 
-![Trip distribution for H3 Hexagons: centroids vs area-weighted](assets/H3-centroid-vs-area-weighted.png){#fig-H3-centroid-vs-area-weighted}
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-h3-centroid-vs-area-weighted >}}
 
 <!-- 4 data analysis figures -->
 <!-- 4.1 descriptive -->
