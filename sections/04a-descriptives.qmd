@@ -1,6 +1,5 @@
 
 ## Descriptive Analysis
-Taxi demand patterns were analyzed across multiple spatial resolutions
 
 <!-- spatial analysis -->
 Visualizing trips at different spatial resolutions (community areas and H3 hexagons 6 and 7) shows how trip demand is heavily concentrated in the downtown and in the northwest at the O'Hare Airport 
