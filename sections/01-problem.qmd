@@ -9,7 +9,7 @@ ride-hailing context. Key challenges include understanding spatial and temporal 
 and optimizing charging schedules to reduce energy costs while ensuring vehicles are always sufficiently charged for their working day
 
 To address these challenges, we analyze historical taxi trip data from Chicago as a proxy for ride-hailing demand. Specifically, we aim to 
-conduct a descriptive analysis, which analyzes taxi demand patterns and how they vary in different spatio-temporal resolutions.  Second, 
+conduct a descriptive analysis, which analyzes taxi demand patterns in different spatio-temporal resolutions.  Second, 
 we build predictive models that forecast taxi trip demand for a given spatial unit and time window, enabling the client to proactively 
 position vehicles where and when they are needed. For example, this includes estimating expected demand on a rainy Sunday morning in the city outskirts.  
 Furthermore, we develop an intelligent charging strategy using reinforcement learning to minimize charging costs while ensuring sufficient vehicle range. 
