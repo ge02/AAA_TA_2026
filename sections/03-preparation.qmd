@@ -16,18 +16,42 @@ negative tips, tolls or extras (0 trips).
 
 The dataset was also 
 checked for missing values, revealing that 0.18% of the 
-non-spatial data was missing. Due to the negligable share, these rows were dropped. Because of privacy reasons, 
+non-spatial data was missing. Due to the negligible share, these rows were dropped. Because of privacy reasons, 
 the spatial data showed many more missing values with census tract data missing for approximately 55% of trips. 
-In these cases, the less granular community area is recorded instead, meaning spatial information is always 
-available at either the census tract or community area level [TRUE ???]. 
+In these cases, the less granular community area is recorded instead, meaning spatial information is almost always 
+available at either the census tract or community area level (@fig-trips-by-location-data). 
 
 The numeric columns were checked for outliers using boxplots (@fig-trip-outlier-boxplot) and removed using 
 the z-score as a statistical solution. Observations with a z-score exceeding a threshhold of 2 in any numeric 
-column were considered outliers and removed. [REASON]. This resulted in 444102 rows, or 7.18%
-of the data at that point being removed, which was seen as acceptable since the remaining set still contained roughly 
-5.7 million rows.
+column were considered outliers and removed. A threshold of 2 was chosen over the more common value of 3 to remove a larger share of extreme values, 
+which was deemed acceptable given the large remaining dataset size.
+This resulted in 444102 rows, or 7.18%
+of the data at that point being removed, leaving the set with roughly 5.7 million rows.
 
-[CONTINUE]
-
+Starting from the outlier-cleaned trip data, spatial fields were finalised through a series of steps. First, trips lacking any spatial information (census tract, community area, coordinates) 
+for either pickup or dropoff location were removed.
+Second, trips starting or ending outside of Chicago (@fig-trips-outside-chicago) were dropped using the official community area boundaries as the city outline. 
+Third, a crosswalk between 2010 census tracts and community areas was constructed using largest-area overlap, assigning each tract 
+to the community area covering the greatest share of its area. 2010 census tract data was used because the taxi trip data uses 2010 census tract IDs, avoiding census tracts appearing like they 
+had zero trips (@fig-census-tract-2000-vs-2010). Missing community areas were then filled using this crosswalk (@fig-community-area-distribution). Additionally, H3 
+hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-H3-distribution-plots). 5 was too coarse (only 8 hexagons for Chicago) and 8 implied more spatial precision than 
+the data supports given that coordinates are community area or census tract centroids. Based on that, hexagon IDs at resolution 6 
+and 7 were assigned to each row using area-weighted mapping within each community area, ensuring hexagon cells never cross community area or city boundaries. Area-weighted mapping was 
+chosen because directly assigning trips to hexagons using the centroid coordinates results in many hexagons having zero trips (@fig-H3-centroid-vs-area-weighted). 
+Finally, together with the weather dataset, a merged dataset based on the starting hour of the trip was created.
 
 ## Supplementary Data
+Before the merge, the weather dataset was filtered to the year 2025 to match the trip data, and timestamps were converted from UTC to Chicago local time. A duplicate timestamp and a missing timestamp 
+were identified, which can both be attributed to the daylight saving time transition, and were therefore retained as-is. No further cleaning was required. For the POI data, the raw point locations were aggregated into spatial features for 
+each community area and H3 hexagon at resolutions 6 and 7. Depending on the category, either a distance or a density feature was computed. For categories where proximity is 
+most relevant, the distance to the nearest POI was calculated, while for categories where concentration matters more, the number of POIs per km² within each spatial unit was used.
+
+## Aggregated Demand Dataset
+
+For predictive modeling, the merged dataset was aggregated into a demand dataset where each row represents one spatio-temporal unit. Trips were grouped by time bucket 
+and spatial cell. To ensure complete coverage, zero-demand rows were added for every spatial cell and time bucket 
+combination with no recorded trips. Four temporal resolutions (1h, 2h, 6h, 24h) and three spatial resolutions (H3 resolution 6, H3 resolution 7, community area) were 
+combined, resulting in 12 datasets. Each row was enriched with temporal features (hour of day, day of week, month, season, public holidays), city-wide weather 
+conditions averaged per time bucket, and static POI features describing the character of each spatial cell. Additionally, idle  time was computed as the time between consecutive trips for the same taxi.
+Gaps exceeding 4 hours were treated as off-duty periods and excluded. Cyclical temporal features such as hour of day, day of week, and month were encoded 
+using sine and cosine transformations to preserve their circular nature.

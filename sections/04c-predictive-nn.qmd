@@ -1,3 +1,51 @@
+# Analysis using Neural Networks
 
-## Analysis using Neural Networks
-test
+As a second predictive approach we forecast taxi demand with feed-forward neural networks (NNs). Demand is not a simple additive function of a given set of features: spatial, temporal, and local context (points of interest, weather) interact non-linearly with each other. A linear model such as our ridge benchmark captures only some of this and sh1ifts the burden onto manual feature engineering, whereas a network discovers the relevant combinations directly during training. We judge the networks against two benchmarks: a ridge regression and a historical-mean predictor (mean `trip_count` per cell $\times$ hour-of-day in the training period). The latter is a demanding baseline, and whether the added flexibility of a network actually beats this cheap lookup is what this chapter sets out to establish.
+
+We compare three fully connected architectures that differ only in capacity — a **baseline** (2 hidden layers $\times$ 64 units), a **deeper** model (8 $\times$ 64) and a **wider** model (2 $\times$ 256) — each evaluated across the four time buckets and two spatial units. After sweeping optimizers, activations and losses, we settled on the configuration that gave the best performance for the least added complexity: ReLU activations with He/Kaiming-normal initialization (which balances weight variances across layers and reduces the chance of unstable starts), and stochastic gradient descent with momentum. A cell's spatial identity (a community area or H3 hexagon) is fed as a jointly learned 16-dimensional embedding concatenated with the standardized numeric features, so that similar locations sit near one another in a learned space.
+
+The most consequential choice is the training objective, because demand is over-dispersed, zero-inflated count data. MSE would assume symmetric constant-variance errors and allow negative predictions; a Poisson likelihood respects the counts but assumes variance equals mean, which ours violates. For the 1 h, 2 h and 6 h models we therefore minimize the **negative binomial (NB2) negative log-likelihood**, which models the variance explicitly and does not assume balanced mean and variance. The network (with NB2 training loss) returns a prediction in log space that is exponentiated back to the original demand scale. Because $\exp(\cdot)$ grows steeply, a small log-space error becomes a large count error, and at daily aggregation (where demand averages ~180 (CA) to ~420 (hex) per day) a minor overshoot can explode into millions of predicted trips and destabilize training. The 24 h models are consequently trained on **MAE over the log1p scale** instead; their loss values and learning curves are therefore not directly comparable to the finer horizons, and only the raw-count evaluation metrics below can be compared across all buckets.
+
+Learning rate and weight decay are tuned per architecture by a two-stage grid search. First, a sweep over `2e-5`–`8e-2` locates the right decade, then a fine sweep within it. Overfitting is held in check by that decoupled weight decay and by early stopping on validation loss (patience 10, best-weight restoration). The data are split 70/15/15 into train/validation/test sets. The split is positional (`shuffle=False`), so validation and test are the tail of the dataframe rather than a random draw despite the `SPLIT="random"` label in the code.
+
+## Model comparison — NNs
+
+In the following a table with the performance metrics of the best model of each spatial resolution – temporal resolution combination is presented against its direct competitor, the historical mean benchmark.
+
+| Resolution  | Model              | Loss | MAE        | RMSE       | R²        | MAPE     |
+| ----------- | ------------------ | ---- | ---------- | ---------- | --------- | -------- |
+| CA — 1h     | **deep_tuned**     | NB2  | **3.16**   | **13.20**  | **0.836** | **61.1** |
+| CA — 1h     | *Historical mean*  | —    | 3.48       | 13.92      | 0.817     | 70.4     |
+| CA — 2h     | **baseline_tuned** | NB2  | **5.59**   | **24.77**  | **0.853** | **60.2** |
+| CA — 2h     | *Historical mean*  | —    | 6.54       | 26.95      | 0.825     | 78.7     |
+| CA — 6h     | **baseline_tuned** | NB2  | **16.35**  | 74.06      | 0.840     | **67.0** |
+| CA — 6h     | *Historical mean*  | —    | 17.87      | **72.68**  | **0.846** | 85.2     |
+| CA — 24h    | **baseline_tuned** | MAE  | 55.03      | 222.99     | 0.872     | **43.8** |
+| CA — 24h    | *Historical mean*  | —    | **53.67**  | **203.11** | **0.894** | 69.5     |
+| Hex-6 — 1h  | **deep_tuned**     | NB2  | **6.23**   | **20.32**  | **0.869** | **66.3** |
+| Hex-6 — 1h  | *Historical mean*  | —    | 7.24       | 22.94      | 0.833     | 84.6     |
+| Hex-6 — 2h  | **deep_tuned**     | NB2  | **12.10**  | **41.64**  | **0.860** | **57.9** |
+| Hex-6 — 2h  | *Historical mean*  | —    | 13.88      | 44.52      | 0.840     | 86.0     |
+| Hex-6 — 6h  | **deep_tuned**     | NB2  | **36.40**  | 128.24     | 0.839     | **57.8** |
+| Hex-6 — 6h  | *Historical mean*  | —    | 38.81      | **120.15** | **0.858** | 80.8     |
+| Hex-6 — 24h | **deep_tuned**     | MAE  | **110.91** | 358.36     | 0.888     | **39.1** |
+| Hex-6 — 24h | *Historical mean*  | —    | 115.95     | **329.77** | **0.905** | 64.2     |
+
+*Test-set metrics for the best tuned NN per configuration versus the historical-mean benchmark.*
+
+Two findings stand out. The granularity pattern: the tuned networks beat the historical mean cleanly at 1–2 h on every metric; at 6 h they win MAE
+and MAPE but lose RMSE and $R^2$ (the mean takes $R^2$ 0.846 vs 0.840 at CA-6h and 0.858 vs 0.839 at Hex-6h); and at 24 h the advantage narrows to MAPE alone,
+with the mean reclaiming RMSE and $R^2$ at both spatial units — and even MAE at CA-24h, the one configuration where the benchmark wins outright. Capacity
+depends on spatial unit as well as granularity: the tuned deep model is strongest across all hexagon resolutions and at CA-1h, while at the coarser
+community-area buckets (2 h, 6 h, 24 h) the tuned baseline takes over. Untuned, the deep and wide models are the most fragile.
+
+
+## Conclusion and interpretation for the business case
+
+The tuned networks beat the plain historical-average lookup on MAE at every resolution **except CA-24h**, where the benchmark is better on MAE, RMSE and $R^2$ alike. So the Neural Networks do add value to the predictions, but not universally. And even where they lead, that alone does not mean the client should implement them. Whether the gain is *worth implementing* is a cost question the significance tests cannot answer, and it turns on how large and how stable that edge actually is.
+
+The size of the edge over the historical mean is **unstable across temporal resolutions**. The MAE reduction is roughly 9–15 % at the 1 h and 2 h resolutions, shrinks to ~6–9 % at 6 h, and at 24 h collapses to ~4 % at hexagon level and turns *negative* at community-area level. Beyond 2 h the picture is mixed on every other metric as well: the mean reclaims RMSE and $R^2$ at 6 h and 24 h, leaving the network a MAE/MAPE-only advantage against a benchmark that costs nothing. For repositioning idle taxis, planning shifts and anticipating local surges, the actionable resolution is the hourly-to-two-hourly hexagon forecast, and it is precisely there that the networks earn their keep: MAE around 6.23 vs. 7.24 at 1 h and 12.10 vs. 13.88 at 2 h (against a mean of ~17.6 trips), with the NB model's strictly positive outputs directly readable as expected pickups.
+
+Which architecture wins depends on both data density and spatial unit. On the hexagon grid the tuned deep model wins at every temporal resolution; on community areas it wins only at 1 h, with the simpler baseline taking over from 2 h onward. This is consistent with a **data-sparsity effect**: with few samples the true non-linear structure is under-determined, so a high-capacity model fits sampling variance instead of signal — precisely overfitting, with the variance term of its error dominating. With more data the non-linear structure sharpens and is better identified by the higher-capacity models. The upshot is that **there is no single best model across both dimensions**, and different temporal resolutions may serve different purposes: 1 h/2 h forecasts are better suited to (real-time) fleet rebalancing, while 6 h/24 h forecasts may be more useful for financial planning of profits and costs, so the model should be chosen based on the use case rather than the resolution based on the model performance.
+
+Weighing cost against benefit makes the recommendation concrete. The benefit is real but bounded and uneven across temporal resolutions, the costs are not. A network requires a per-configuration two-stage learning-rate and weight-decay search to build, an exponential link fragile enough that an untuned model can be
