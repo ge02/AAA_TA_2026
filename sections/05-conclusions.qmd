@@ -1,3 +1,10 @@
 
 # Conclusion
-conclusion text
+
+To conclude the project, we learned that careful data analysis & preparation is essential. Most striking was the finding, that spatial data was sometimes not precise (translation of centroids to census tracts) and that weather data had a really low impact on taxi demand, which is counterintuitive at first glance.
+
+Another crucial learning is that the most complex model is not always the best. Testing out different models revealed, that simpler models sometimes even outperform more complex ones. Translating this to the business case, where we always have to keep resource utilization in mind, this finding weighs even stronger.
+
+In future projects, we would suggest to always start with the simplest projection of the reality first, which does not even necessarily involve using machine learning. As we go we would gradually increase complexity, always keeping an eye on cost and desired precision.
+
+Breaking this down to our project this means: We suggest the fleet operator to use a SVM model with POI data but without weather data. For best practical use we would suggest using h3 hexagons with res6 and a 1-hour time window. Our data analysis suggests that the number of people in a given area at a specific time could be a strong predictor. Sensor data from smart city infrastructure — which, for example, measures how many people pass through a street - or chiacago tourist or event data could thus be a good source of input to consider.

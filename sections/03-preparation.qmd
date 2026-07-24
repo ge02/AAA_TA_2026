@@ -1,8 +1,3 @@
-
-# Data Preparation
-Before analysis, each dataset underwent a series of preparation steps to ensure 
-data quality and compatibility across sources.
-
 ## Trip Data
 The dataset was first inspected to get an overview of the datatypes and find
 potential issues. This revealed that several numeric columns were incorrectly stored as strings 
