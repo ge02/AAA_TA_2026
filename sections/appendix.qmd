@@ -30,9 +30,9 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
 
-![Spatial KDE of Taxi Pickup Demand](assets/KDE-general.png){#fig-trips-KDE}
+{{< embed notebooks/02_Descriptive_Analysis/02_05_Kernel_Density_Estimation.ipynb#fig-trips-kde >}}
 
-![Spatial KDE of Taxi Pickup Demand by Time of Day](assets/KDE-tod.png){#fig-trips-KDE-tod}
+{{< embed notebooks/02_Descriptive_Analysis/02_05_Kernel_Density_Estimation.ipynb#fig-trips-kde-tod >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
 
@@ -99,5 +99,3 @@
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
 
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
-
-{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-regret >}}
