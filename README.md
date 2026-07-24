@@ -53,16 +53,16 @@ spatial resolutions, enriched with temporal, weather and POI features.
 ## Repository Structure
 
 ```
-report.qmd                      Main Quarto report that stitches the sections together
-sections/                       Report text, one file per chapter (problem → conclusion)
-notebooks/                      All analysis, organized by stage:
-  01_Preprocessing/             Fetching, cleaning, merging, aggregation
-  02_Descriptive_Analysis/      Descriptive data analysis
-  03_Predictive_Analysis/       SVM (and NN) modeling
+report.qmd                      # Main Quarto report that stitches the sections together
+sections/                       # Report text, one file per chapter (problem → conclusion)
+notebooks/                      # All analysis, organized by stage:
+  01_Preprocessing/             # Fetching, cleaning, merging, aggregation
+  02_Descriptive_Analysis/      # Descriptive data analysis
+  03_Predictive_Analysis/       # SVM (and NN) modeling
   04_Reinforcement_Learning/
-data/                           Datasets (download from sciebo; samples included)
-assets/                         Figures used in the report
-docs/                           Rendered output (report.pdf)
+data/                           # Datasets (download from sciebo; samples included)
+assets/                         # Figures used in the report
+docs/                           # Rendered output (report.pdf)
 ```
 
 ## Getting Started
@@ -87,4 +87,4 @@ cells, rendering formats), see [README_QUARTO.md](README_QUARTO.md).
 
 ## Team
 
-Anthony Ge · Hendrik Mehl · Niklas Eichholz · Yannick Herrmann
+Niklas Eichholz · Anthony Ge · Yannick Herrmann · Hendrik Mehl
