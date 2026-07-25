@@ -1,6 +1,29 @@
 
 # Conclusion
 
+We recommend deploying the Two-Stage Hurdle SVM, run without weather data, as the primary demand prediction model
+for the data in its current form. The tuned Neural Network was essentially its equal on typical hour-to-hour accuracy,
+but the SVM has three practical advantages that matter more for day-to-day operations. It tracks the ups and downs of
+demand more faithfully, which makes it more dependable precisely when it counts most: during the high-density surges
+that put the greatest strain on the fleet. It also behaves predictably: it trains quickly and gives the same result
+every time, without the finicky tuning and specialized hardware the Neural Network requires to run in production.
+
+The simple Historical Mean benchmark, which predicts based on past averages, is too blunt to serve as the main model,
+but it is essentially free to run and worth keeping as a fallback for quiet, low-volume situations where a full model
+adds little.
+
+A note on scope. This recommendation rests on one key design decision: we aggregated individual trips into area-and-time
+buckets before the models ever saw them. A different starting point (e.g. training directly on individual trip records instead)
+could shift the balance between the approaches, and possibly the recommendation itself. Our findings are therefore strong
+evidence for the SVM under this data preparation, not a universal verdict on SVMs versus neural networks.
+
+That framing also points to where a continued engagement would go next. The work here establishes a solid foundation,
+but it is limited to two model families while other architectures remain unexplored. The
+natural next step would be to widen the field of architectures, and in particular to test hybrid designs: for example,
+using the SVM to produce a first-pass estimate and a neural network on top as a "reasoner" that refines it using patterns
+the base model misses. Combinations like this could capture the strengths of both families at once, and would be a worthwhile
+focus for the next phase.
+
 To conclude the project, we learned that careful data analysis & preparation is essential. Most striking was the finding, that spatial data was sometimes not precise (translation of centroids to census tracts) and that weather data had a really low impact on taxi demand, which is counterintuitive at first glance.
 
 Another crucial learning is that the most complex model is not always the best. Testing out different models revealed, that simpler models sometimes even outperform more complex ones. Translating this to the business case, where we always have to keep resource utilization in mind, this finding weighs even stronger.
