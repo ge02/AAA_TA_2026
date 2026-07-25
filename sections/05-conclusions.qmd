@@ -1,33 +1,12 @@
 
 # Conclusion
 
-We recommend deploying the Two-Stage Hurdle SVM, run without weather data, as the primary demand prediction model
-for the data in its current form. The tuned Neural Network was essentially its equal on typical hour-to-hour accuracy,
-but the SVM has three practical advantages that matter more for day-to-day operations. It tracks the ups and downs of
-demand more faithfully, which makes it more dependable precisely when it counts most: during the high-density surges
-that put the greatest strain on the fleet. It also behaves predictably: it trains quickly and gives the same result
-every time, without the finicky tuning and specialized hardware the Neural Network requires to run in production.
+This project develops a framework to help a car manufacturer to enter the US ride-hailing market by answering one core question: where, when, and how much demand will occur. Using Chicago taxi trips, we approached it in three stages — a descriptive analysis of taxi patterns, predictive models that forecast demand, and a reinforcement-learning study of EV charging.
 
-The simple Historical Mean benchmark, which predicts based on past averages, is too blunt to serve as the main model,
-but it is essentially free to run and worth keeping as a fallback for quiet, low-volume situations where a full model
-adds little.
+A lesson across the project was that careful data preparation and analysis matter as much as the modeling itself. Cleaning and aggregating the trips revealed, for example, that the spatial data is less precise than it first appears (mostly community area level instead of exact coordinates) and that weather has a surprisingly low impact on demand, which may be counterintuitive. The descriptive analysis then showed that Chicago's taxi demand is heavily concentrated in the downtown core and around O'Hare Airport and has only small seasonal variation. This regularity is itself a valuable finding and it explains why location features such as points of interest increase demand far more than volatile inputs like weather. 
 
-A note on scope. This recommendation rests on one key design decision: we aggregated individual trips into area-and-time
-buckets before the models ever saw them. A different starting point (e.g. training directly on individual trip records instead)
-could shift the balance between the approaches, and possibly the recommendation itself. Our findings are therefore strong
-evidence for the SVM under this data preparation, not a universal verdict on SVMs versus neural networks.
+The Prediction stage confirmed that this structure can be turned into reliable forecasts. Both support vector machines and neural networks outperformed a naive historical-average benchmark, and the two families performed similarly to one another. Because their accuracy was comparable, the choice between them came down to practical considerations rather than raw performance: the SVM trains quickly, behaves deterministically, and tracks demand surges slightly more faithfully, which is why we recommend it as main model. Just as important was the learning that the most complex model is not always the best, simpler configurations often matched or even beat more complex ones.
 
-That framing also points to where a continued engagement would go next. The work here establishes a solid foundation,
-but it is limited to two model families while other architectures remain unexplored. The
-natural next step would be to widen the field of architectures, and in particular to test hybrid designs: for example,
-using the SVM to produce a first-pass estimate and a neural network on top as a "reasoner" that refines it using patterns
-the base model misses. Combinations like this could capture the strengths of both families at once, and would be a worthwhile
-focus for the next phase.
+A Reinforcement Learning study addressed the operational charging strategy at the level of a single vehicle. We showed that a smart charger can learn a good charging policy purely from experience: charging steadily at moderate power, keeping a buffer above the expected daily need. Both learning agents came within roughly 5% of the mathematically optimal cost. Intelligent charging, does not require perfect information, a self-learning agent can find the almost best achievable cost on its own.
 
-To conclude the project, we learned that careful data analysis & preparation is essential. Most striking was the finding, that spatial data was sometimes not precise (translation of centroids to census tracts) and that weather data had a really low impact on taxi demand, which is counterintuitive at first glance.
-
-Another crucial learning is that the most complex model is not always the best. Testing out different models revealed, that simpler models sometimes even outperform more complex ones. Translating this to the business case, where we always have to keep resource utilization in mind, this finding weighs even stronger.
-
-In future projects, we would suggest to always start with the simplest projection of the reality first, which does not even necessarily involve using machine learning. As we go we would gradually increase complexity, always keeping an eye on cost and desired precision.
-
-Breaking this down to our project this means: We suggest the fleet operator to use a SVM model with POI data but without weather data. For best practical use we would suggest using h3 hexagons with res6 and a 1-hour time window. Our data analysis suggests that the number of people in a given area at a specific time could be a strong predictor. Sensor data from smart city infrastructure — which, for example, measures how many people pass through a street - or chiacago tourist or event data could thus be a good source of input to consider.
+Taken together, the three stages give the client a data-driven foundation for its fleet deployment, rebalancing, and charging decisions as it enters the market. The key takeaway of our study is: start with the simplest projection of reality, which does not even need to involve machine learning, and increase complexity gradually, always keeping an eye on cost and desired precision. For this project specifically, we suggest a SVM model employing POI data and not using weather data at an hourly, hexagon-level resolution. In a future examiniation smart-city sensor counts of how many people pass through an area, or Chicago tourism, demographic and event data would likely be a good source of  input for more elaborate models.
