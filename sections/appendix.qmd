@@ -1,8 +1,9 @@
 
-# Appendix
+\clearpage
+# Appendix A: Figures
 
 <!-- 2 data description figures -->
-![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns}
+![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns width=60%}
 
 ![Weather Data Columns](assets/weather_info.png){#fig-weather-columns}
 
@@ -100,3 +101,8 @@
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-curves >}}
 
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
+
+\clearpage
+
+# Appendix B: Use of LLMs
+Large language models (LLMs) were used in a supporting role during this project. Claude Code, ChatGpt and Gemini helped with fixing coding errors and answering syntax or programming related questions. Also Claude Code was used to resolved Merge Conflicts and solve git issues and is therefore co-author in the Git Repository with 2 Commits. ChatGPT and Gemini were also used to improve the writing of the report and make passages clearer. Claude Code helped with Quarto questions, including resolving syntax issues and adjusting formatting when needed.
