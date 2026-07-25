@@ -1,26 +1,82 @@
 
+## Demand Prediction
+This chapter turns to the underlying question our business client asks: are machine learning models worth their
+keep in predicting ride-hailing demand. We approach it the way a fleet operator would, weighing
+predictive gains against the practical cost of adopting more complex methods.
+
+Two questions organize the analysis. First, can support vector machines and neural networks predict demand reliably,
+and do they improve compared to simple historical averages by enough to justify the effort of building, tuning, and
+maintaining them?
+
+Second, how should the data be represented? We compare uniform hexagonal grid cells against administrative community
+areas, and hourly demand slices against coarser time buckets, to determine which spatial and temporal resolution best
+supports accurate prediction.
+
 ## Prediction using Support Vector Machines
 
-We modeled Chicago taxi demand using Support Vector Machines (SVM) at an H3 hexagon (resolution 6) 1-hour spatio-temporal resolution to optimize high-frequency fleet dispatch logistics.
+We modeled Chicago taxi demand using Support Vector Machines (SVM) at an H3 hexagon (resolution 6) 1-hour spatio-temporal
+resolution to optimize high-frequency fleet dispatch logistics.
 
-To begin with, we had to select suitable features and preprocess the data. To prevent critical data leakage and establish strict structural boundaries, we excluded nine post-hoc operational and transaction variables that are only known after a trip concludes: `active_taxis`, `avg_idle_time`, `avg_trip_duration`, `avg_trip_distance`, `avg_fare`, `avg_trip_total`, `avg_tip`, `tip_rate`, and `share_cash_payment`. Next, to avoid temporal leakage, the dataset of 289,080 entries was partitioned using a strict chronological split (80% train / 20% test), reserving the final 57,816 intervals for out-of-sample validation. Finally, the remaining predictors were routed through a `ColumnTransformer`, which normalized continuous features via `StandardScaler` to baseline variances and mapped categorical spatial tags (`pickup_h3_res6`) via `OneHotEncoder` to compute localized neighborhood intercepts.
+To begin with, we had to select suitable features and preprocess the data. To prevent critical data leakage and establish
+strict structural boundaries, we excluded nine post-hoc operational and transaction variables that are only known after a
+trip concludes: e.g. number of active vehicles, average idle times of vehicles, average trip duration etc.
+Next, to avoid temporal leakage, the dataset of ~289,000 entries was
+partitioned using a strict chronological split (80% train / 20% test), reserving the final ~58,000 intervals for
+out-of-sample validation. Finally, the location identifiers (community areas and H3 hexagons) are passed through
+a `OneHotEncoder` (creates a binary feature for each location (e.g. hexagon)), allowing the model to learn a separate intercept
+for each neighborhood.
 
-To establish an initial understanding of feature importances, we conducted a linear coefficients analysis. This revealed that Point of Interest (POI) data strongly drives trip demand, led by density metrics such as `hotels_per_km2` (+18.55) and `attractions_per_km2` (+14.89). Conversely, local weather metrics like `apparent_temperature` (-0.89) and `rain` (+0.15) represent low-impact statistical noise.
+To establish an initial understanding of feature importances, we conducted a linear coefficients analysis. This revealed
+that Point of Interest (POI) data strongly drives trip demand, led by density metrics such as number of hotels per squared
+km and number of attractions per km2. Conversely, local weather metrics like the apparent temperature and amount of rain
+represent low-impact statistical noise.
 
-As an initial benchmark, we evaluated a `LinearSVR` model without a kernel. This baseline underperformed, yielding an $R^2$ of 0.6134 ($\text{MAE} = 13.05$ trips). Its primary limitation was a severe boundary infraction: 34.52% of predictions fell below zero, exposing the linear plane's inability to respect non-negative demand thresholds.
+As an initial benchmark, we evaluated a `LinearSVR` model without a kernel. This baseline underperformed, yielding an
+$R^2$ of 0.6134 ($\text{MAE} = 13.05$ trips). Its primary limitation was a severe boundary infraction: 34.52% of
+predictions fell below zero, exposing the linear plane's inability to respect non-negative demand thresholds.
 
-Subsequent grid-search optimization (detailed in @fig-grid-search) clearly identified the Radial Basis Function (RBF) kernel as the most promising approach. It also revealed 1000 as most promosing value for the hyperparameter `C`. However, exact RBF kernel training scales cubically ($O(N^3)$) with dataset size, rendering standard training computationally intractable on our hardware. To bypass this bottleneck, we deployed a Nystroëm low-rank approximation to project the infinite-dimensional RBF space onto a compact set of landmark points. We evaluated different landmark counts alongside models with and without weather features, given that our previous linear coefficient analysis flagged weather metrics as marginal. As shown in @fig-model-results, our top-performing configuration excluded weather data entirely, climbing to 0.8734 $R^2$ and driving the MAE down to 6.49 trips.
+Subsequent grid-search optimization (detailed in @fig-grid-search) clearly identified the Radial Basis Function (RBF)
+kernel as the most promising approach. It also revealed 1000 as most promosing value for the hyperparameter `C`.
+However, exact RBF kernel training scales cubically ($O(N^3)$) with dataset size, rendering standard training
+computationally intractable on our hardware. To bypass this bottleneck, we deployed a Nystroëm low-rank approximation
+to project the infinite-dimensional RBF space onto a compact set of landmark points. We evaluated different landmark
+counts alongside models with and without weather features, given that our previous linear coefficient analysis flagged
+weather metrics as marginal. As shown in @fig-model-results, our top-performing configuration excluded weather data
+entirely, climbing to 0.8734 $R^2$ and driving the MAE down to 6.49 trips.
 
-While these performance metrics represent a robust fit, especially given a highly efficient training runtime of approximately 7.5 minutes, the model still produced negative predictions for 22.28% of intervals, which required artificial post-hoc clipping to zero. To naturally enforce physical boundary constraints, we developed a decoupled Two-Stage Hurdle SVM Framework. Stage 1 (The Gatekeeper) utilizes an RBF-approximated `LinearSVC` binary classifier to map the active-demand perimeter ($1$ if active, $0$ if dead). Stage 2 (The Volume Engine) then runs an RBF-approximated `LinearSVR` trained exclusively on active instances, shielding the regression plane from zero-floor distortions (see @fig-hurdle-results for the exact results).
+While these performance metrics represent a robust fit, especially given a highly efficient training runtime of
+approximately 7.5 minutes, the model still produced negative predictions for 22.28% of intervals, which required
+artificial post-hoc clipping to zero. To naturally enforce physical boundary constraints, we developed a decoupled
+Two-Stage Hurdle SVM Framework. Stage 1 (The Gatekeeper) utilizes an RBF-approximated `LinearSVC` binary classifier
+to map the active-demand perimeter ($1$ if active, $0$ if dead). Stage 2 (The Volume Engine) then runs an RBF-approximated
+`LinearSVR` trained exclusively on active instances, shielding the regression plane from zero-floor distortions
+(see @fig-hurdle-results for the exact results).
 
-Despite a minor structural tendency to generate false zeros during low-demand hours, this optimized No Weather Hurdle Model emerged as our champion architecture, achieving an elite 0.8751 $R^2$ and a new floor of 6.44 trips MAE. Crucially, it maximizes variance capture while mathematically guaranteeing 0% negative boundary violations, rendering it highly viable for production deployment.
+Despite a minor structural tendency to generate false zeros during low-demand hours, this optimized No Weather
+Hurdle Model emerged as our champion architecture, achieving an elite 0.8751 $R^2$ and a new floor of 6.44 trips MAE.
+Crucially, it maximizes variance capture while mathematically guaranteeing 0% negative boundary violations, rendering
+it highly viable for production deployment.
 
-We also explored how performance scales across different spatio-temporal resolutions. Decreasing temporal resolution (aggregating from 1-hour to 6-hour and 24-hour windows) smooths high-frequency demand surges, naturally boosting variance capture. The 6-Hour Hexagon (No Weather) model secured our highest raw fit at 0.9042 $R^2$ ($\text{MAE} = 32.66$ trips). However, absolute errors scale with the larger temporal footprint, which limits its utility for real-time dispatching.
+We also explored how performance scales across different spatio-temporal resolutions. Decreasing temporal resolution
+(aggregating from 1-hour to 6-hour and 24-hour windows) smooths high-frequency demand surges, naturally boosting variance
+capture. The 6-Hour Hexagon (No Weather) model secured our highest raw fit at 0.9042 $R^2$ ($\text{MAE} = 32.66$ trips).
+However, absolute errors scale with the larger temporal footprint, which limits its utility for real-time dispatching.
 
-Shifting the spatial unit from uniform geometric hexagons to irregular, administrative boundaries (Census Tracts/Community Areas) degrades true operational accuracy. The 24-Hour community area model yields a deceptively high 0.8929 $R^2$ but suffers a massive absolute error distortion of 57.12 trips MAE (compared to the 24-Hour Hexagon's 26.98 MAE). This surge in MAE is a textbook demonstration of the Modifiable Areal Unit Problem (MAUP). It is driven primarily by the Scale Effect: because administrative Community Areas are larger on average (~7.68 $km^2$) than Resolution 7 hexagons (~5.16 $km^2$), they aggregate a much higher absolute volume of hourly trips, naturally inflating scale-dependent absolute metrics like MAE. Furthermore, the Zone Effect introduces irregular boundaries and mismatched spatial centroids, warping the distance metrics calculated on the SVM hyperplane. A full comparison of models can be found in @fig-model-comparison-r-squared and @fig-model-comparison-mae.
+Shifting the spatial unit from uniform geometric hexagons to irregular, administrative boundaries (Census Tracts/Community
+Areas) degrades true operational accuracy. The 24-Hour community area model yields a deceptively high 0.8929 $R^2$ but
+suffers a massive absolute error distortion of 57.12 trips MAE (compared to the 24-Hour Hexagon's 26.98 MAE). This surge
+in MAE is a textbook demonstration of the Modifiable Areal Unit Problem (MAUP). It is driven primarily by the Scale Effect:
+because administrative Community Areas are larger on average (~7.68 $km^2$) than Resolution 7 hexagons (~5.16 $km^2$), they
+aggregate a much higher absolute volume of hourly trips, naturally inflating scale-dependent absolute metrics like MAE.
+Furthermore, the Zone Effect introduces irregular boundaries and mismatched spatial centroids, warping the distance metrics
+calculated on the SVM hyperplane. A full comparison of models can be found in @fig-model-comparison-r-squared and
+@fig-model-comparison-mae.
 
 Finally, we would try out these potential improvements in Follow-Up projects:
 
-1. Classifier Threshold Calibration: Optimize the Hurdle's Stage 1 gatekeeper to explicitly resolve the $R^2$-destructive false-zero bottleneck.
-2. Spatial-Lag Graph Embeddings: Integrate a spatial adjacency weight matrix ($W$) or graph neural network embeddings to capture continuous neighborhood demand overflow.
-3. Dynamic Landmark Sampling: Reconfigure the Nystroëm approximation using a k-means clustering anchor selection rather than random sampling to optimize tracking across hyper-local urban corridors.
+1. Classifier Threshold Calibration: Optimize the Hurdle's Stage 1 gatekeeper to explicitly resolve the $R^2$-destructive
+false-zero bottleneck.
+2. Spatial-Lag Graph Embeddings: Integrate a spatial adjacency weight matrix ($W$) or graph neural network embeddings to
+capture continuous neighborhood demand overflow.
+3. Dynamic Landmark Sampling: Reconfigure the Nystroëm approximation using a k-means clustering anchor selection rather
+than random sampling to optimize tracking across hyper-local urban corridors.
