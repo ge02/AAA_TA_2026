@@ -11,7 +11,7 @@ Furthermore, hourly Chicago weather data was obtained from the Open-Meteo API [@
 The initial dataset includes roughly 17500 entries and key variables of the dataset include temperature, precipitation and sunshine duration (@fig-weather-columns). 
 
 
-Points-of-Interest data for Chicago was gathered from OpenStreetMap via the Overpass API [@overpassapi2026], covering nine categories: airports, train stations, stadiums, restaurants, bars and clubs, hotels, hospitals, universities, and tourist attractions. These raw POI locations are subsequently aggregated into distance and density features for multiple spatial resolutions during data preparation. (@fig-poi-features-ca)
+Points-of-Interest data for Chicago was gathered from OpenStreetMap via the Overpass API [@overpassapi2026], covering nine categories: airports, train stations, stadiums, restaurants, bars and clubs, hotels, hospitals, universities, and tourist attractions. These raw POI locations are subsequently aggregated into distance and density features for multiple spatial resolutions during data preparation.
 
 In order to be able to analyse the data on census tract and community area level, additional geometry data containing the shapes of these areas was obtained. These datasets contain the geometry for Chicago's 77 community areas and 878 census tracts.
 

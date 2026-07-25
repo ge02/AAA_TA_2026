@@ -27,7 +27,7 @@ Additionally, H3 hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-
 Before the merge, the weather dataset was filtered to the year 2025 to match the trip data, and timestamps were converted from UTC to Chicago local time. A duplicate timestamp and a missing timestamp 
 were identified, which can both be attributed to the daylight saving time transition, and were therefore retained as-is. No further cleaning was required. For the POI data, the raw point locations were aggregated into spatial features for 
 each community area and H3 hexagon at resolutions 6 and 7. Depending on the category, either a distance or a density feature was computed. For categories where proximity is 
-most relevant, the distance to the nearest POI was calculated, while for categories where concentration matters more, the number of POIs per km² within each spatial unit was used.
+most relevant, the distance to the nearest POI was calculated, while for categories where concentration matters more, the number of POIs per km² within each spatial unit was used  (@fig-poi-features-ca).
 
 ## Aggregated Demand Dataset
 
