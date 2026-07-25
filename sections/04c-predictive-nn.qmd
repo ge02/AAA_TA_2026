@@ -1,34 +1,26 @@
 ## Analysis using Neural Networks
 
-Our client wants to understand ride-hailing demand dynamics in Chicago, so we framed the evaluation around the questions
-a fleet operator actually asks: can neural networks predict demand reliably, and is the improvement over the near-free
-historical average large enough to justify building, tuning and maintaining them? And which view of the data serves demand
-prediction best — uniform hexagonal grid cells or administrative community areas, hourly slices or coarser time buckets?
+To assess the relevance of neural networks for our business client, we carry four measures through the chapter.
+**MAE** (mean absolute error) captures the average miss in trips for a given area and time, while **$R^2$** measures
+how much of the genuine variation in demand a model reproduces (1.0 marking a perfect fit).
 
-We report two headline numbers throughout. **MAE** (mean absolute error) is the average miss in trips: an MAE of 6 means the
-forecast is typically off by about six trips for a given area and hour. **$R^2$** describes how much of the real variation in
-demand the model reproduces, on a scale where 1.0 is perfect. We also report **RMSE**, which is similar to MAE but penalizes
-large misses much more heavily, and **MAPE**, the average error expressed as a percentage, which allows fair comparison between
-busy and quiet areas.
+This chapter asks whether that added flexibility translates into meaningfully better forecasts, and if so, whether
+the improvement is worth the cost of building and tuning a network rather than relying on the simpler alternatives
+already on the table.
 
-Behind these headline figures we also tracked additional diagnostics, including how accurately each model identifies genuinely
-empty cells, and monitored training progress to catch models that memorize the training data rather than learning general patterns.
-To check whether a network's errors truly differ from a benchmark's rather than differing by chance, we ran a statistical significance
-test. However, this test can only tell us whether two sets of errors differ on this particular
-sample, not whether the operator should deploy a network. That decision is a cost–benefit judgement, taken up in the conclusion. The
-test only points us toward the configurations worth costing out.
-
-We compared three network designs that differ only in size — a **baseline** (2 layers of 64 units), a **deeper** model (8 layers of 64)
+We compared three network designs that differ in size: a **baseline** (2 layers of 64 units), a **deeper** model (8 layers of 64)
 and a **wider** model (2 layers of 256), each evaluated across four time buckets (1h, 2h, 6h, 24h) and both spatial units (community areas vs. H3 hexagons).
 More layers or wider layers mean more capacity to represent complicated patterns, but also more opportunity to latch onto noise. After
-testing various training settings, we kept the configuration that delivered the best results for the least added complexity. Each
-area is also given a small learned "profile" that the model builds during training, so that locations behaving similarly end up being
-treated similarly.
+testing various training settings, we kept the configuration that delivered the best results for the least added complexity.
+Unlike the SVMs, neural networks let us handle location differently: instead of one-hot encoding, we can train a dedicated
+embedding layer that maps each hexagon or community area to a learned vector. This lets the network discover its own
+representation of spatial similarity, placing neighborhoods with comparable demand patterns close together in the embedding
+space rather than treating every location as an isolated binary feature.
 
 The most consequential choice was what the model is asked to optimize. Taxi demand is count data: it is never negative, it is often
 zero, and its swings grow larger as demand grows. A standard error measure would ignore all three properties and happily predict
 negative trips. We therefore trained the 1h, 2h and 6h models on a **negative binomial** objective, which is built for exactly
-this kind of count data and guarantees positive predictions. There is a catch. The network produces its answer on a compressed
+this kind of count data and guarantees positive predictions. There is a catch: the network produces its answer on a compressed
 scale and then expands it back to actual trip counts, and because that expansion is exponential, a small error on the compressed scale
 becomes a large error in trips. At daily aggregation, where demand averages roughly 180 trips per community area and 420 per hexagon.
 A modest overshoot can balloon into an absurd forecast and destabilize training. The 24 h models were therefore trained on a more robust
@@ -37,7 +29,6 @@ metrics reported below can be compared across all time buckets.
 
 The table below shows the best network for each combination of spatial and temporal resolution, against its direct competitor, the
 historical average. Bold marks the winner on each metric.
-
 
 |Resolution|Model|Loss|MAE|RMSE|R²|MAPE|
 |---|---|---|---|---|---|---|
@@ -69,8 +60,6 @@ including on MAE.
 **The right model size depends on the spatial unit as well as the time bucket.** The deeper network is strongest across all hexagon
 resolutions and at CA-1h, while at the coarser community-area buckets (2 h, 6 h, 24 h) the simpler baseline takes over. Left untuned,
 the deeper and wider models are the most unreliable of the three.
-
-Here's a version that avoids the term:
 
 Weather features cost more than they contribute. Removing the weather block improved the model performance,
 which matches what the SVM feature analysis found independently. The reason is structural. The reason lies in
