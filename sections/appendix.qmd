@@ -14,13 +14,15 @@
 
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-census-tract-2000-vs-2010 >}}
-
 {{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
 
 {{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-h3-distribution-plots >}}
 
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-h3-centroid-vs-area-weighted >}}
+
+
+{{< embed notebooks/01_Preprocessing/01_03_Fetch_POI_Data.ipynb#fig-poi-features-ca >}}
+
 
 <!-- 4 data analysis figures -->
 <!-- 4.1 descriptive -->
