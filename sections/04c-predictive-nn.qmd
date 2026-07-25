@@ -10,8 +10,8 @@ already on the table.
 
 We compared three network designs that differ in size: a **baseline** (2 layers of 64 units), a **deeper** model (8 layers of 64)
 and a **wider** model (2 layers of 256), each evaluated across four time buckets (1h, 2h, 6h, 24h) and both spatial units (community areas vs. H3 hexagons).
-More layers or wider layers mean more capacity to represent complicated patterns, but also more opportunity to latch onto noise. After
-testing various training settings, we kept the configuration that delivered the best results for the least added complexity.
+More layers or wider layers mean more capacity to represent complicated patterns, but also more opportunity to latch onto noise.
+We tuned each architecture's hyperparameters via grid  search, keeping the configuration that delivered the best results for the least added complexity.
 Unlike the SVMs, neural networks let us handle location differently: instead of one-hot encoding, we can train a dedicated
 embedding layer that maps each hexagon or community area to a learned vector. This lets the network discover its own
 representation of spatial similarity, placing neighborhoods with comparable demand patterns close together in the embedding
