@@ -68,6 +68,10 @@ data/aggregated/*
 data/results/*
 !data/results/.gitkeep
 
+#ignore files in poi but commit the folder
+data/poi/*
+!data/poi/.gitkeep
+
 #cache
 .cache.sqlite
 
