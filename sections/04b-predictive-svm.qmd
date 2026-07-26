@@ -6,7 +6,8 @@ Two questions organize the analysis. First, can support vector machines and neur
 
 Second, how should the data be represented? We compare uniform hexagonal grid cells against administrative community areas, and hourly demand slices against coarser time buckets, to determine which spatial and temporal resolution best supports accurate prediction.
 
-To assess the following models in a comparable way, we carry two measures through the chapter. MAE (mean absolute error) captures the average miss in trips for a given area and time, while $R^2$ measures how much of the genuine variation in demand a model reproduces (1.0 marking a perfect fit).
+To assess the following models in a comparable way, we carry two measures through the chapter. MAE (mean absolute error) captures the average miss in trips for a given area and time, while $R^2$ measures how much of the genuine variation in demand a model reproduces (1.0 marking a perfect fit). Additionally, we employ a benchmark using historical averages: for each spatial cell, the mean demand of all training observations sharing its hour of day and day of week, computed on the training split only and applied unchanged to the test period, so that it captures the recurring weekly pattern without access to future data.
+
 
 
 ### Prediction using Support Vector Machines
@@ -60,12 +61,3 @@ aggregate a much higher absolute volume of hourly trips, naturally inflating sca
 Furthermore, the Zone Effect introduces irregular boundaries and mismatched spatial centroids, warping the distance metrics
 calculated on the SVM hyperplane. A full comparison of models can be found in @fig-model-comparison-r-squared and
 @fig-model-comparison-mae.
-<!-- 
-Finally, we would try out these potential improvements in Follow-Up projects:
-
-1. Classifier Threshold Calibration: Optimize the Hurdle's Stage 1 gatekeeper to explicitly resolve the $R^2$-destructive
-false-zero bottleneck.
-2. Spatial-Lag Graph Embeddings: Integrate a spatial adjacency weight matrix ($W$) or graph neural network embeddings to
-capture continuous neighborhood demand overflow.
-3. Dynamic Landmark Sampling: Reconfigure the Nystroëm approximation using a k-means clustering anchor selection rather
-than random sampling to optimize tracking across hyper-local urban corridors. -->
