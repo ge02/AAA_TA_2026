@@ -3,10 +3,10 @@ The dataset was first inspected to get an overview of the datatypes and find
 potential issues. This revealed that several numeric columns were incorrectly stored as strings 
 and that the timestamp columns were not yet in datetime format. Both were corrected during preprocessing.
 Additionally, the dataset contained no duplicated rows or trip identifiers. Furthermore, several implausible
-trips were identified and removed during cleaning. These included trips with zero or negative distance (528447 trips) and trips with a 
-duration of less than 60 seconds (381488 trips), as these trips are likely erroneous. Overlapping trips with the same taxi identifier 
-were also removed (28320 trips) based on the assumption that these result from recording errors.
-Price attributes were also validated by checking for and removing trips with zero or negative fares (1455 trips) and whether there are 
+trips were identified and removed during cleaning. These included trips with zero or negative distance (~528.000 trips) and trips with a 
+duration of less than 60 seconds (~381.000 trips), as these trips are likely erroneous. Overlapping trips with the same taxi identifier 
+were also removed (~28.000 trips) based on the assumption that these result from recording errors.
+Price attributes were also validated by checking for and removing trips with zero or negative fares (1.455 trips) and whether there are 
 negative tips, tolls or extras (0 trips). 
 
 The dataset was also checked for missing values, revealing that 0.18% of the non-spatial data was missing. Due to the negligible share, these rows were dropped. Because of privacy reasons, the spatial data showed many more missing values with census tract data missing for approximately 55% of trips. In these cases, the less granular community area is recorded instead, meaning spatial information is almost always available at either the census tract or community area level (@fig-trips-by-location-data). 
@@ -15,13 +15,13 @@ The numeric columns were checked for outliers using boxplots (@fig-trip-outlier-
 the z-score as a statistical solution. Observations with a z-score exceeding a threshhold of 2 in any numeric 
 column were considered outliers and removed. A threshold of 2 was chosen over the more common value of 3 to remove a larger share of extreme values, 
 which was deemed acceptable given the large remaining dataset size.
-This resulted in 444102 rows, or 7.18%
+This resulted in ~444.000 rows, or 7.18%
 of the data at that point being removed, leaving the set with roughly 5.7 million rows.
 
-Starting from the outlier-cleaned trip data, spatial fields were finalised through a series of steps. First, trips lacking any spatial information (census tract, community area, coordinates) for either pickup or dropoff location were removed.
+Starting from the outlier-cleaned trip data, spatial fields were finalised through a series of steps. First, a trip was removed if it lacked all spatial information (census tract, communicty area, coordinates) for its pickup or dropoff location.
 Second, trips starting or ending outside of Chicago (@fig-trips-outside-chicago) were dropped using the official community area boundaries as the city outline. 
 Third, for all trips with missing community area information, this information was filled using the census tract data, such that the community area is available for all trips and can be used as spatial unit (@fig-community-area-distribution). 
-Additionally, H3 hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-h3-distribution-plots). Resolution 5 was too coarse (only 8 hexagons for Chicago) and resolution 8 implied more spatial precision than the data supports given that coordinates are community area or census tract centroids. Based on that, hexagon IDs at resolution 6 and 7 were assigned to each row with a special approach. Since the trips only carry the single centroid coordinate of their community area, assigning hexagons directly from these coordinates would make all of these trips collapse onto the same point, potentially leaving hexagons with zero trips and a uneven distribution. To avoid this, trips were instead spread out across the whole community area before being assigned to a hexagon, resulting in a smoother, way more realistic distribution across the map (@fig-h3-centroid-vs-area-weighted). Finally, together with the weather dataset, a merged dataset based on the starting hour of the trip was created.
+Additionally, H3 hexagons were visualized at multiple levels, 5,6,7 and 8 (@fig-h3-distribution-plots). Resolution 5 was too coarse (only 8 hexagons for Chicago) and resolution 8 implied more spatial precision than the data supports given that coordinates are community area or census tract centroids. Based on that, hexagon IDs at resolution 6 and 7 were assigned to each row with a special approach. Since the trips only carry the single centroid coordinate of their community area, assigning hexagons directly from these coordinates would make all of these trips collapse onto the same point, potentially leaving hexagons with zero trips and an uneven distribution. To avoid this, trips were instead spread out across the whole community area before being assigned to a hexagon, resulting in a smoother, way more realistic distribution across the map (@fig-h3-centroid-vs-area-weighted). Finally, together with the weather dataset, a merged dataset based on the starting hour of the trip was created.
 
 ## Supplementary Data
 Before the merge, the weather dataset was filtered to the year 2025 to match the trip data, and timestamps were converted from UTC to Chicago local time. A duplicate timestamp and a missing timestamp 

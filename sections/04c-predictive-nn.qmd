@@ -9,7 +9,7 @@ embedding layer that maps each hexagon or community area to a learned vector. Th
 representation of spatial similarity, placing neighborhoods with comparable demand patterns close together in the embedding
 space rather than treating every location as an isolated binary feature.
 
-The most consequential choice was what the model is asked to optimize. Taxi demand is count data: it is never negative, it is often
+A very consequential choice was what the model is asked to optimize. Taxi demand is count data: it is never negative, it is often
 zero, and its swings grow larger as demand grows. A standard error measure would ignore all three properties and happily predict
 negative trips. We therefore trained the 1h, 2h and 6h models on a negative binomial objective, which is built for exactly
 this kind of count data and guarantees positive predictions. There is a catch: the network produces its answer on a compressed
@@ -55,7 +55,7 @@ Weather features cost more than they contribute. Removing the weather block impr
 which matches what the SVM feature analysis found independently. The reason is structural. The reason lies in
 the approach of aggregating the individual trips before they reach the network. After aggregation, the data follows a strongly repeating
 pattern: the same daily, weekly, monthly patterns holding remarkably steady across the year. Weather does
-the opposite: temperature, rain and wind swing enormously between a January morning and a July afternoon. So the model is handed inputs that
+the opposite: temperature, rain and wind swing enormously between January and July. So the model is handed inputs that
 vary heavily against a target that barely responds to them. Whatever genuine effect weather has on demand is small enough that the model cannot
 pin it down reliably: it ends up fitting incidental coincidences between weather and demand in the training period rather than a stable
 relationship, and those fitted patterns do not carry over to new data. Dropping the block removes that liability and leaves a smaller, cleaner

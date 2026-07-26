@@ -7,8 +7,8 @@ with timestamps rounded to the nearest 15 minutes. Since the full dataset starti
 limited to only include trips from 2025, resulting in a raw dataset of roughly 6.8 million rows. Important attributes include trip and taxi identifiers, the timestamp of the trip, 
 centroid coordinates of the community area or census tract where the trip took place and multiple attributes about the trips properties like price or length (@fig-raw-trip-columns).
 
-Furthermore, hourly Chicago weather data was obtained from the [Open-Meteo API](https://open-meteo.com/en/docs) for the period of January 2025 to January 2026.
-The initial dataset includes roughly 17500 entries and key variables of the dataset include temperature, precipitation and sunshine duration (@fig-weather-columns). 
+Furthermore, hourly Chicago weather data was obtained from the [Open-Meteo API](https://open-meteo.com/en/docs) for the period of January 2024 to January 2026.
+The initial dataset includes roughly 17.500 entries and key variables of the dataset include temperature, precipitation and sunshine duration (@fig-weather-columns). 
 
 
 Points-of-Interest data for Chicago was gathered from OpenStreetMap via the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API), covering nine categories: airports, train stations, stadiums, restaurants, bars and clubs, hotels, hospitals, universities, and tourist attractions. These raw POI locations are subsequently aggregated into distance and density features for multiple spatial resolutions during data preparation.
