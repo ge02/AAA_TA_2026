@@ -1,16 +1,15 @@
-## Model Comparison & Business Evaluation: SVM vs. Neural Networks
+### Model Comparison: SVM vs. Neural Networks
 
 We evaluated whether a Feed-Forward Neural Network (NN) provides sufficient operational value
 over our champion Two-Stage Hurdle Support Vector Machine (SVM) for real-time fleet dispatching
 at our target resolution: 1-hour buckets across Resolution 6 H3 Hexagons (289,080 cell-hours;
 test mean demand $\approx 17.6$ trips/hour).
 
-| Architecture / Model | $R^2$ Score | MAE (Trips) | RMSE (Trips) | Boundary Infractions | Operational Complexity |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **Two-Stage Hurdle SVM (No Weather)** | **0.8751** | 6.44 | **20.31** | **0.0%** (Blocked) | Low–Moderate (~12 min train) |
-| **Deep Tuned NN (NB2 Loss)** | 0.8690 | **6.23** | 20.32 | **0.0%** (Exponentiated) | High (Multi-stage sweep) |
-| **Historical Mean Benchmark** | 0.8330 | 7.24 | 22.94 | 0.0% | Zero (Lookup table) |
-| **Linear SVR Baseline** | 0.6134 | 13.05 | 35.73 | 34.52% (Clipped) | Low (< 1 sec; invalid) |
+| Architecture / Model | $R^2$ Score | MAE (Trips) | RMSE (Trips) | Operational Complexity |
+| :--- | :---: | :---: | :---: | :--- |
+| **Two-Stage Hurdle SVM (No Weather)** | **0.8751** | 6.44 | **20.31** | Low–Moderate (~12 min train) |
+| **Deep Tuned NN (NB2 Loss)** | 0.8690 | **6.23** | 20.32 | High (Multi-stage sweep) |
+| **Historical Mean Benchmark** | 0.8330 | 7.24 | 22.94 | Zero (Lookup table) |
 
 At our core dispatch horizon, both advanced models comfortably outperform simple linear
 and historical benchmarks. The Deep Tuned NN achieves the lowest mean absolute error
