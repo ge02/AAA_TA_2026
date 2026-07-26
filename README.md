@@ -22,11 +22,10 @@ guesswork. The project tackles this in three stages:
 3. **Reinforcement learning** — an EV charging agent that learns a cost-minimizing
    home-charging strategy under uncertain next-day energy demand.
 
+
 ## Data
 
-The analysis combines several public data sources (see [data/README.md](data/README.md)
-for download instructions — the full datasets live on sciebo, sample data ships
-with the repo):
+The analysis combines several public data sources:
 
 - **Chicago Taxi Trips** ([Chicago Data Portal](https://data.cityofchicago.org/Transportation/Taxi-Trips-2024-/ajtu-isnz/about_data)) — ~6.8M raw trips from 2025, one
   trip per row with timestamps, spatial identifiers, fares and distances.
@@ -37,10 +36,32 @@ with the repo):
   universities, attractions), aggregated into distance/density features.
 - **Geometry** ([Chicago Data Portal](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-Map/cauq-8yn6)) — boundaries for Chicago's community areas and census tracts.
 
-Trips are cleaned, spatially resolved (community area, census tract, and H3
-hexagons at resolutions 6 & 7), merged with weather, and aggregated into
-**12 demand datasets** spanning four temporal (1h, 2h, 6h, 24h) and three
-spatial resolutions, enriched with temporal, weather and POI features.
+There are three ways to use this repo using different data sources:
+
+1. **End to End Reproduction:** Run each notebook including all in `01_Preprocessing` this fetches all datasets fresh and directly from the sources and performs all cleaning an preprocessing steps. 
+This process takes **several hours** due to many API calls and multiple Gigabytes of data downloading from the internet.
+
+2. **Recommended:** Get all data sets including our final preprocessed data from Sciebo in the `data_parquet` folder: https://uni-koeln.sciebo.de/s/z5xgdGosd9y9c4e (Password: AAA2026) 
+Put each data set in the repective folder or just replace everything with the sciebo data. The folder `data` in the repo route must keep the name. 
+Then each notebook starting from `02_Descriptive_Analysis` runs using our preprocessed data.
+
+3. **Fast check if everything compiles:** Just run all notebooks starting from `02_Descriptive_Analysis`, except `03_Predictive_Analysis` without adding any data sets. This method uses sampled datasets that are pushed to the git repository. This does not gurantee senseful outcomes of the notebooks, but serves as a quick check if all notebooks compile using a fraction of the dataset. (see `00_Sample_Data.ipynb`)
+
+## Getting Started
+
+The project is managed with [`uv`](https://github.com/astral-sh/uv) and rendered
+with [Quarto](https://quarto.org/). Quick start:
+
+```bash
+uv sync
+uv run python -m ipykernel install --user --name aaa-team-02 --display-name "Python (AAA Team 02)"
+uv run quarto render report.qmd --to pdf
+```
+
+## Report
+
+The reports relies on linked graphs from notebooks. To get the exact replication of our intended report we recommend to render it using the notebook outputs pushed to this git repo. If the notebooks are run using a different data sources (such as Sample Data), graphs render differently. If notebooks are not run to the end or if they are missing some outputs the report may not render correctly. 
+
 
 ## Methods
 
@@ -56,34 +77,14 @@ spatial resolutions, enriched with temporal, weather and POI features.
 report.qmd                      # Main Quarto report that stitches the sections together
 sections/                       # Report text, one file per chapter (problem → conclusion)
 notebooks/                      # All analysis, organized by stage:
-  01_Preprocessing/             # Fetching, cleaning, merging, aggregation
+  01_Preprocessing/             # Fetching, cleaning, merging, aggregation can be skipped if using Sciebo Data or sample data
   02_Descriptive_Analysis/      # Descriptive data analysis
-  03_Predictive_Analysis/       # SVM (and NN) modeling
+  03_Predictive_Analysis/       # SVM and NN modeling
   04_Reinforcement_Learning/
-data/                           # Datasets (download from sciebo; samples included)
+data/                           # Datasets 
 assets/                         # Figures used in the report
 docs/                           # Rendered output (report.pdf)
 ```
-
-## Getting Started
-
-The project is managed with [`uv`](https://github.com/astral-sh/uv) and rendered
-with [Quarto](https://quarto.org/). Quick start:
-
-```bash
-uv sync
-uv run python -m ipykernel install --user --name aaa-team-02 --display-name "Python (AAA Team 02)"
-uv run quarto render report.qmd --to pdf
-```
-
-**Note:**
-Note: A small sample of the cleaned data is included in `data/samples` so you can verify the notebooks execute without downloading the full datasets. Just update the path in each notebook's Load Data cell to point at `data/samples`.
-
-For a full run on the entirety of the cleaned data, please download the datasets from [Sciebo (Password: 'AAA2026')](https://uni-koeln.sciebo.de/s/z5xgdGosd9y9c4e) and copy the content of the directory `data_parquet` into `data/` to reproduce the notebooks;
-without them, the included sample data is used automatically (except for the model notebooks).
-
-For full details on the toolchain (Quarto, LaTeX, kernels, embedding notebook
-cells, rendering formats), see [README_QUARTO.md](README_QUARTO.md).
 
 ## Team
 

@@ -1,5 +1,5 @@
 ---
-title: "Project Report Template" # Give your report a title
+title: "Entering the Urban Mobility Market: Demand Prediction and Smart Charging for an Electric Ride-Hailing Fleet" # Give your report a title
 course: "Advanced Analytics and Applications" # Specify the course name
 team: "02" # Specify your team number
 author:
