@@ -1,88 +1,88 @@
 
-# Appendix
+\clearpage
+# Appendix A: Figures
 
-<!-- data description figures -->
-![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns}
+<!-- 2 data description figures -->
+![Raw Chicago Taxi Trip Data Column Descriptions](assets/raw_trip_cols.png){#fig-raw-trip-columns width=60%}
 
 ![Weather Data Columns](assets/weather_info.png){#fig-weather-columns}
 
-<!-- data preparation figures -->
-{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
-
-
-![Trip distribution plots for H3 hexagons at multiple levels](assets/H3-distribution-plots.png){#fig-H3-distribution-plots}
-
-{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
-
-![Trip distribution for H3 Hexagons: centroids vs area-weighted](assets/H3-centroid-vs-area-weighted.png){#fig-H3-centroid-vs-area-weighted}
-
-{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-census-tract-2000-vs-2010 >}}
-
-{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
+<!-- 3 data preparation figures -->
 
 {{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-by-location-data >}}
 
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-trip-outlier-boxplot >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-trips-outside-chicago >}}
+
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-community-area-distribution >}}
+
+{{< embed notebooks/01_Preprocessing/01_04_Trip_Data_Cleanup.ipynb#fig-h3-distribution-plots >}}
+
+{{< embed notebooks/02_Descriptive_Analysis/02_01_Deep_Dive_Spatial_Mapping.ipynb#fig-h3-centroid-vs-area-weighted >}}
+
+
+{{< embed notebooks/01_Preprocessing/01_03_Fetch_POI_Data.ipynb#fig-poi-features-ca >}}
+
+
 <!-- 4 data analysis figures -->
+<!-- 4.1 descriptive -->
 
-<!-- 4a descriptive -->
-<!-- 4a1 spatial -->
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-demand-by-spatial-unit-ca >}}
 
-![Spatial KDE of Taxi Pickup Demand](assets/KDE-general.png){#fig-trips-KDE}
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Kernel_Density_Estimation.ipynb#fig-trips-kde >}}
 
-![Spatial KDE of Taxi Pickup Demand by Time of Day](assets/KDE-tod.png){#fig-trips-KDE-tod}
+{{< embed notebooks/02_Descriptive_Analysis/02_04_Kernel_Density_Estimation.ipynb#fig-trips-kde-tod >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-price-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-miles-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-duration-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-idle-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-tips-by-spatial-unit-ca >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-h3 >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_02_Descriptive_Spatial_Analysis.ipynb#fig-start-time-by-spatial-unit-ca >}}
 
-<!-- 4a2 other -->
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-hour >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-day >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-by-month >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-demand-heatmap >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-demand >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-tip-rate >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-idle-time >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-idle-distribution >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-fare-per-mile >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-duration >}}
+{{< embed notebooks/02_Descriptive_Analysis/02_03_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
 
-{{< embed notebooks/02_Descriptive_Analysis/02_04_Descriptive_Temporal_Analysis.ipynb#fig-rain-distance >}}
-
-<!-- predicitve svm -->
+<!-- 4.2 predictive svm -->
 
 ![Grid Search Results](assets/grid_search.png){#fig-grid-search}
 
@@ -95,9 +95,16 @@
 ![Spatio-temporal model comparison (MAE)](assets/model_comparison_mae.png){#fig-model-comparison-mae}
 
 
-<!-- reinforcement learning figures -->
+<!-- 4.5 reinforcement learning figures -->
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-cost >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-mdp >}}
+
+{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-curves >}}
 
 {{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-policies >}}
 
-{{< embed notebooks/04_Reinforcement_Learning/04_Reinforcement_Learning_Simulation.ipynb#fig-rl-regret >}}
+\clearpage
+
+# Appendix B: Use of LLMs
+Large language models (LLMs) were used in a supporting role during this project. Claude Code, ChatGpt and Gemini helped with fixing coding errors and answering syntax or programming related questions. Also Claude Code was used to resolved Merge Conflicts and solve git issues and is therefore co-author in the Git Repository with 2 Commits. ChatGPT and Gemini were also used to improve the writing of the report and make passages clearer. Claude Code helped with Quarto questions, including resolving syntax issues and adjusting formatting when needed.

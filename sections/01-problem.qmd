@@ -1,16 +1,13 @@
 
-# Problem description
-The smart mobility market is highly competitive and current reports indicate that particularly ride-hailing, using autonomous and electric vehicles
-will dominate the market in the near future.
-Traditional car manufacturers face the risk of disruption if they fail to establish competitive mobility services. 
-Our client, a renowned German car manufacturer, seeks to enter the ride-hailing market in the US, using a fully 
-electrified fleet. However, the client lacks operational expertise in managing electric vehicle fleets in an urban
-ride-hailing context. Key challenges include understanding spatial and temporal demand patterns to deploy vehicles efficiently 
-and optimizing charging schedules to reduce energy costs while ensuring vehicles are always sufficiently charged for their working day
+# Problem Description
+The smart mobility market is highly competitive, and current reports indicate that ride-hailing, specifically with autonomous and electric vehicles will dominate it in the near future. This development opens a substantial opportunity for traditional car manufacturers to move beyond vehicle sales and establish themselves as competitive mobility service providers.
 
-To address these challenges, we analyze historical taxi trip data from Chicago as a proxy for ride-hailing demand. Specifically, we aim to 
-conduct a descriptive analysis, which analyzes taxi demand patterns and how they vary in different spatio-temporal resolutions.  Second, 
-we build predictive models that forecast taxi trip demand for a given spatial unit and time window, enabling the client to proactively 
-position vehicles where and when they are needed. For example, this includes estimating expected demand on a rainy Sunday morning in the city outskirts.  
-Furthermore, we develop an intelligent charging strategy using reinforcement learning to minimize charging costs while ensuring sufficient vehicle range. 
-Together, these analyses will will enable the client to make data-driven decisions regarding fleet deployment, driver scheduling, and charging infrastructure investment.
+Our client, a renowned German car manufacturer, seeks to enter the US ride-hailing market with a fully electrified fleet. The client, however, lacks operational expertise in managing electric vehicle fleets in an urban ride-hailing context. Several challenges follow directly from that gap: how to reduce energy costs, how to manage fleet charging schedules, and how to rebalance and relocate vehicles, all reactively in real time and proactively in advance.
+
+Each of these questions reduces to the same underlying ability: knowing where and when how much demand will occur. Charging schedules can only be optimized against a known window of low utilization, rebalancing is only possible if the imbalance is anticipated in advance, and infrastructure investment depends on where demand concentrates over the long run. Without a reliable demand forecast, every decision becomes purely hypothetical.
+
+To address this, we analyze historical taxi trip data from Chicago as a proxy for ride-hailing demand, in three stages.
+First, a descriptive analysis examines how taxi demand varies across spatial and temporal resolutions, establishing a broad picture of the relationships between variables in the data.
+Second, we build predictive models that forecast trip demand, for example, expected demand on a Sunday morning in the city outskirts, enabling the client to shape its operational strategy e.g. where to deploy additional vehicles.
+Third, we develop an intelligent charging strategy using reinforcement learning to minimize charging costs while ensuring sufficient vehicle range.
+Together, these analyses enable the client to make data-driven decisions on fleet deployment, driver scheduling, and charging infrastructure investment.

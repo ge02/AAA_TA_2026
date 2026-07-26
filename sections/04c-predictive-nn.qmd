@@ -1,3 +1,67 @@
+### Analysis using Neural Networks
 
-## Analysis using Neural Networks
-test
+This chapter analyzes the same demand prediction problem using feed-forward neural networks. We compared three network designs that differ in size: a baseline (2 layers of 64 units), a deeper model (8 layers of 64)
+and a wider model (2 layers of 256), each evaluated across four time buckets (1h, 2h, 6h, 24h) and both spatial units (community areas vs. H3 hexagons).
+More layers or wider layers mean more capacity to represent complicated patterns, but also more opportunity to latch onto noise.
+We tuned each architecture's hyperparameters via grid  search, keeping the configuration that delivered the best results for the least added complexity.
+Unlike the SVMs, neural networks let us handle location differently: instead of one-hot encoding, we can train a dedicated
+embedding layer that maps each hexagon or community area to a learned vector. This lets the network discover its own
+representation of spatial similarity, placing neighborhoods with comparable demand patterns close together in the embedding
+space rather than treating every location as an isolated binary feature.
+
+A very consequential choice was what the model is asked to optimize. Taxi demand is count data: it is never negative, it is often
+zero, and its swings grow larger as demand grows. A standard error measure would ignore all three properties and happily predict
+negative trips. We therefore trained the 1h, 2h and 6h models on a negative binomial objective, which is built for exactly
+this kind of count data and guarantees positive predictions. There is a catch: the network produces its answer on a compressed
+scale and then expands it back to actual trip counts, and because that expansion is exponential, a small error on the compressed scale
+becomes a large error in trips. At daily aggregation, where demand averages roughly 180 trips per community area and 420 per hexagon, a modest overshoot can turn into an absurd forecast and destabilize training. The 24 h models were therefore trained on a more robust
+objective instead. As a result, their internal training values are not directly comparable to the shorter horizons; only the trip-count
+metrics reported below can be compared across all time buckets.
+
+The table below shows the best network for each combination of spatial and temporal resolution, against its direct competitor, the
+historical average. Bold marks the winner on each metric.
+
+|Resolution|Model|Loss|MAE|RMSE|R²|MAPE|
+|---|---|---|---|---|---|---|
+|CA — 1h|**deep_tuned**|NB2|**3.16**|**13.20**|**0.836**|**61.1**|
+|CA — 1h|_Historical mean_|—|3.48|13.92|0.817|70.4|
+|CA — 2h|**baseline_tuned**|NB2|**5.59**|**24.77**|**0.853**|**60.2**|
+|CA — 2h|_Historical mean_|—|6.54|26.95|0.825|78.7|
+|CA — 6h|**baseline_tuned**|NB2|**16.35**|74.06|0.840|**67.0**|
+|CA — 6h|_Historical mean_|—|17.87|**72.68**|**0.846**|85.2|
+|CA — 24h|**baseline_tuned**|MAE|55.03|222.99|0.872|**43.8**|
+|CA — 24h|_Historical mean_|—|**53.67**|**203.11**|**0.894**|69.5|
+|Hex-6 — 1h|**deep_tuned**|NB2|**6.23**|**20.32**|**0.869**|**66.3**|
+|Hex-6 — 1h|_Historical mean_|—|7.24|22.94|0.833|84.6|
+|Hex-6 — 2h|**deep_tuned**|NB2|**12.10**|**41.64**|**0.860**|**57.9**|
+|Hex-6 — 2h|_Historical mean_|—|13.88|44.52|0.840|86.0|
+|Hex-6 — 6h|**deep_tuned**|NB2|**36.40**|128.24|0.839|**57.8**|
+|Hex-6 — 6h|_Historical mean_|—|38.81|**120.15**|**0.858**|80.8|
+|Hex-6 — 24h|**deep_tuned**|MAE|**110.91**|358.36|0.888|**39.1**|
+|Hex-6 — 24h|_Historical mean_|—|115.95|**329.77**|**0.905**|64.2|
+
+
+Three findings stand out: 
+The advantage shrinks as the time window widens. At 1h and 2h the tuned networks beat the historical average on every metric. At
+6h they still win on average error (MAE and MAPE) but lose on RMSE and $R^2$. The lookup edges ahead at 0.846 vs 0.840 for community
+areas and 0.858 vs 0.839 for hexagons. At 24 h the network's advantage narrows to MAPE alone, and at CA-24h the benchmark wins outright,
+including on MAE.
+
+The right model size depends on the spatial unit as well as the time bucket. The deeper network is strongest across all hexagon
+resolutions and at CA-1h, while at the coarser community-area buckets (2 h, 6 h, 24 h) the simpler baseline takes over. Left untuned,
+the deeper and wider models are the most unreliable of the three.
+
+Weather features cost more than they contribute. Removing the weather block improved the model performance,
+which matches what the SVM feature analysis found independently. The reason is structural. The reason lies in
+the approach of aggregating the individual trips before they reach the network. After aggregation, the data follows a strongly repeating
+pattern: the same daily, weekly, monthly patterns holding remarkably steady across the year. Weather does
+the opposite: temperature, rain and wind swing enormously between January and July. So the model is handed inputs that
+vary heavily against a target that barely responds to them. Whatever genuine effect weather has on demand is small enough that the model cannot
+pin it down reliably: it ends up fitting incidental coincidences between weather and demand in the training period rather than a stable
+relationship, and those fitted patterns do not carry over to new data. Dropping the block removes that liability and leaves a smaller, cleaner
+input space, which is why the leaner models hold up just as well. It is a useful reminder that in a prediction task this regular, more data is
+not automatically more signal.
+
+The hourly hexagon setup illustrates the whole pipeline. It covers 33 hexagons across roughly 289,000 area-hours; ~36% of the test rows
+have zero demand, and average demand is ~18 trips per hexagon-hour. The historical average sets the benchmark at $R^2 = 0.833$ with an MAE of 7.24 trips. A tuned basic Neural Network reaches $R^2 = 0.844$, above the benchmark. The
+tuned deep model reaches $R^2 = 0.869$ and MAE = 6.23 trips, roughly 14 % below the benchmark's average error, and it earns that gain precisely where a lookup table is blind: on day-to-day deviations from the typical pattern for that hexagon and hour.

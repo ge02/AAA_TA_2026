@@ -33,6 +33,8 @@ dependencies = [
     "optuna>=4.9.0",
     "simpy>=4.1.2",
     "gymnasium>=1.3.0",
+    "quarto-cli>=1.9.38",
+    "tinytex>=0.2.0",
 ]
 
 [tool.uv]

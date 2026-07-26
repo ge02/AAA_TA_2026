@@ -1,5 +1,5 @@
 ---
-title: "Project Report Template" # Give your report a title
+title: "Entering the Urban Mobility Market: Demand Prediction and Smart Charging for an Electric Ride-Hailing Fleet" # Give your report a title
 course: "Advanced Analytics and Applications" # Specify the course name
 team: "02" # Specify your team number
 author:
@@ -11,10 +11,10 @@ author:
     student-id: "7354459"
   - name: Yannick Herrmann
     student-id: "7409728"
-contact: student@smail.uni-koeln.de # Specify one contact for the project
+contact: peichho3@smail.uni-koeln.de # Specify one contact for the project
 supervisor: "Univ.-Prof. Dr. Wolfgang Ketter"
 co-supervisor: "Janik Muires" # TA of the course is the co-supervisor
-date: 2026-04-01 # Date of submission
+date: 2026-07-26 # Date of submission
 ---
 
 <!-- While you could use \clearpage or \newpage, this is the recommended way to insert a page break in Quarto as it translates to the native page break command for the output format you are using (e.g., \clearpage for PDF, <div style="page-break-after: always;"></div> for HTML). -->
@@ -37,7 +37,9 @@ date: 2026-04-01 # Date of submission
 
 {{< include sections/04c-predictive-nn.qmd >}}
 
-{{< include sections/04d-reinforcement.qmd >}}
+{{< include sections/04d-comparison-svm-nn.qmd >}}
+
+{{< include sections/04e-reinforcement.qmd >}}
 
 {{< include sections/05-conclusions.qmd >}}
 
@@ -45,4 +47,4 @@ date: 2026-04-01 # Date of submission
 \clearpage
 
 # Citations and References
-You can easily cite your sources using BibLaTeX. For example, you can cite the Quarto documentation [@quarto2024] or a textbook like "R for Data Science" [@wickham2023]. The bibliography will be automatically generated at the end of the document.
+<!-- You can easily cite your sources using BibLaTeX. For example, you can cite the Quarto documentation [@quarto2024] or a textbook like "R for Data Science" [@wickham2023]. The bibliography will be automatically generated at the end of the document. -->

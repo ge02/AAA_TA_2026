@@ -1,0 +1,42 @@
+### Model Comparison: SVM vs. Neural Networks
+
+We evaluated whether a Feed-Forward Neural Network (NN) provides sufficient operational value
+over our champion Two-Stage Hurdle Support Vector Machine (SVM) for real-time fleet dispatching
+at our target resolution: 1-hour buckets across Resolution 6 H3 Hexagons (289,080 cell-hours;
+test mean demand $\approx 17.6$ trips/hour).
+
+| Architecture / Model | $R^2$ Score | MAE (Trips) | RMSE (Trips) | Operational Complexity |
+| :--- | :---: | :---: | :---: | :--- |
+| **Two-Stage Hurdle SVM (No Weather)** | **0.8751** | 6.44 | **20.31** | Low–Moderate (~12 min train) |
+| **Deep Tuned NN (NB2 Loss)** | 0.8690 | **6.23** | 20.32 | High (Multi-stage sweep) |
+| **Historical Mean Benchmark** | 0.8330 | 7.24 | 22.94 | Zero (Lookup table) |
+
+At our core dispatch horizon, both advanced models comfortably outperform simple linear
+and historical benchmarks. The Deep Tuned NN achieves the lowest mean absolute error
+(6.23 trips/hour), marginally edging out the Hurdle SVM (6.44 trips/hour) by 0.21 trips
+per cell-hour. However, the Hurdle SVM outperforms the NN in global variance
+capture ($R^2 = 0.8751$ vs. $0.8690$), while the two are effectively tied on peak error
+mitigation ($\text{RMSE} = 20.31$ vs. $20.32$). The Hurdle SVR fits a continuous regression
+plane directly on active demand, tracking peak surges without numerical instability.
+Both models successfully eliminate impossible negative demand ($0.0\%$ infractions).
+
+Is the Neural Network worth deploying? For a Chicago fleet operator managing real-time
+vehicle rebalancing, deploying a Neural Network over the Hurdle SVM is not justified:
+
+1. Negligible Operational Edge: A marginal reduction of 0.21 trips/hour provides no
+practical advantage when rebalancing fleet vehicles in discrete units.
+2. High Infrastructure & Training Overhead: Unlike the Hurdle SVM, which trains
+deterministically in ~12 minutes via Nystroëm landmark approximation, NNs exhibit
+severe hyperparameter fragility (untuned variants collapsed to negative $R^2$) and
+require continuous re-tuning, GPU serving infrastructure, and monitoring against
+exponential prediction drift.
+3. Inferior Surge Forecasting: Lower $R^2$ makes the NN less reliable
+for predicting critical high-density demand surges (e.g., event exits, airport waves)
+where fleet misallocations incur steep opportunity costs.
+
+Our final deployment recommendation is to deploy the Two-Stage Hurdle SVM (No Weather).
+It maximizes variance capture ($R^2 = 0.8751$), natively prevents negative outputs, and
+ensures computational stability. We might suggest to retain the Historical Mean Lookup
+as a zero-cost backup for low-volume edge cases. Standalone Neural Networks should not
+be used for 1-hour fleet dispatching due to disproportionate operational overhead and
+lower variance capture.

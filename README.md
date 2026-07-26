@@ -1,78 +1,91 @@
-# Assignment Template: Team Project
+# Forecasting Ride-Hailing Demand & Smart EV Charging
 
-This repository is a Quarto-based template for your team project report. It integrates your data science workflow (Python/Jupyter) directly into a professionally formatted LaTeX/PDF report.
+**Advanced Analytics and Applications — Team 02**
 
-## 🚀 Getting Started
+This repository contains the full data science project for Team 02: an end-to-end
+analysis that helps a car manufacturer enter the US ride-hailing market with a
+fully electrified fleet. Using historical **Chicago taxi trips** as a proxy for
+ride-hailing demand, we build a pipeline that goes from raw data to demand
+forecasts and an intelligent EV charging strategy.
 
-### 1. Prerequisites
-Ensure you have the following installed:
-- **[Quarto](https://quarto.org/docs/get-started/)**: The publishing system used to render the report.
-- **[uv](https://github.com/astral-sh/uv)**: A fast Python package manager.
-- **LaTeX**: A TeX distribution (like [TinyTeX](https://yihui.org/tinytex/)) to generate the PDF.
-  ```bash
-  quarto install tinytex
-  ```
+## Motivation
 
-### 2. Setup the Environment
-We use `uv` to manage dependencies. Run the following commands in the root directory:
+Operating an electric ride-hailing fleet in a city comes down to one recurring
+question: **where and when will how much demand occur?** Charging schedules,
+vehicle rebalancing, and infrastructure investment all depend on being able to
+anticipate demand. Without a reliable forecast, every operational decision is
+guesswork. The project tackles this in three stages:
+
+1. **Descriptive analysis** — how taxi demand varies across space and time.
+2. **Predictive modeling** — forecasting trip demand per spatio-temporal cell
+   using Support Vector Machines and Neural Networks.
+3. **Reinforcement learning** — an EV charging agent that learns a cost-minimizing
+   home-charging strategy under uncertain next-day energy demand.
+
+
+## Data
+
+The analysis combines several public data sources:
+
+- **Chicago Taxi Trips** ([Chicago Data Portal](https://data.cityofchicago.org/Transportation/Taxi-Trips-2024-/ajtu-isnz/about_data)) — ~6.8M raw trips from 2025, one
+  trip per row with timestamps, spatial identifiers, fares and distances.
+- **Weather** ([Open-Meteo API](https://open-meteo.com/en/docs)) — hourly Chicago weather (temperature,
+  precipitation, sunshine).
+- **Points of Interest** ([OpenStreetMap](https://www.openstreetmap.org/) / [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API)) — nine categories
+  (airports, stations, stadiums, restaurants, bars, hotels, hospitals,
+  universities, attractions), aggregated into distance/density features.
+- **Geometry** ([Chicago Data Portal](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-Map/cauq-8yn6)) — boundaries for Chicago's community areas and census tracts.
+
+There are three ways to use this repo using different data sources:
+
+1. **End to End Reproduction:** Run each notebook including all in `01_Preprocessing` this fetches all datasets fresh and directly from the sources and performs all cleaning an preprocessing steps. 
+This process takes **several hours** due to many API calls and multiple Gigabytes of data downloading from the internet.
+
+2. **Recommended:** Get all data sets including our final preprocessed data from Sciebo in the `data_parquet` folder: https://uni-koeln.sciebo.de/s/z5xgdGosd9y9c4e (Password: AAA2026) 
+Put each data set in the repective folder or just replace everything with the sciebo data. The folder `data` in the repo route must keep the name. 
+Then each notebook starting from `02_Descriptive_Analysis` runs using our preprocessed data.
+
+3. **Fast check if everything compiles:** Just run all notebooks starting from `02_Descriptive_Analysis`, except `03_Predictive_Analysis` without adding any data sets. This method uses sampled datasets that are pushed to the git repository. This does not gurantee senseful outcomes of the notebooks, but serves as a quick check if all notebooks compile using a fraction of the dataset. (see `00_Sample_Data.ipynb`)
+
+## Getting Started
+
+The project is managed with [`uv`](https://github.com/astral-sh/uv) and rendered
+with [Quarto](https://quarto.org/). Quick start:
+
 ```bash
 uv sync
-uv run python -m ipykernel install --user --name team-project-template --display-name "Python (Team Project Template)"
+uv run python -m ipykernel install --user --name aaa-team-02 --display-name "Python (AAA Team 02)"
+uv run quarto render report.qmd --to pdf
 ```
-This will create a `.venv` directory and register the Python kernel so Quarto can find it. You can change the `--name` if you prefer, but make sure to select the correct kernel in your editor (e.g., VS Code or Jupyter).
 
-### 3. Rendering the Report
-To generate the final report in different formats, use `uv run` to ensure Quarto uses the correct environment:
+## Report
 
-  ```bash
-  uv run quarto render report.qmd
-  ```
+The reports relies on linked graphs from notebooks. To get the exact replication of our intended report we recommend to render it using the notebook outputs pushed to this git repo. If the notebooks are run using a different data sources (such as Sample Data), graphs render differently. If notebooks are not run to the end or if they are missing some outputs the report may not render correctly. 
 
-This will render all formats as specified in `_quarto.yml`. If you want to render individual formats, use the `--to` argument:
 
-- **PDF (Final Submission)**:
-  ```bash
-  uv run quarto render report.qmd --to pdf
-  ```
-- **HTML (Interactive Review)**:
-  ```bash
-  uv run quarto render report.qmd --to html
-  ```
+## Methods
 
-> **Note for VS Code Users**: If you use the Quarto VS Code extension, ensure you have the `.venv` selected as your Python interpreter (Cmd/Ctrl + Shift + P -> "Python: Select Interpreter").
+| Stage | Approach |
+|-------|----------|
+| Descriptive | Spatial & temporal demand analysis, kernel density estimation, POI/weather visualizations |
+| Predictive | Support Vector Machines and Neural Networks across spatio-temporal resolutions, compared on MAE and R² |
+| Reinforcement Learning | Monte Carlo control & Q-learning vs. an exact dynamic-programming optimum for EV home charging |
 
-### 4. Clean Up
-If your preview fails, Quarto might leave temporary files behind. You can clean them up by running:
-```bash
-rm -f *.quarto_ipynb_*
+## Repository Structure
+
 ```
-This is also useful for clearing out build artifacts if you want to perform a completely fresh render.
+report.qmd                      # Main Quarto report that stitches the sections together
+sections/                       # Report text, one file per chapter (problem → conclusion)
+notebooks/                      # All analysis, organized by stage:
+  01_Preprocessing/             # Fetching, cleaning, merging, aggregation can be skipped if using Sciebo Data or sample data
+  02_Descriptive_Analysis/      # Descriptive data analysis
+  03_Predictive_Analysis/       # SVM and NN modeling
+  04_Reinforcement_Learning/
+data/                           # Datasets 
+assets/                         # Figures used in the report
+docs/                           # Rendered output (report.pdf)
+```
 
-## 📂 Project Structure
-- `report.qmd`: The main document where you write your report.
-- `sections/`: Sections to include in the main report.
-- `notebooks/`: A directory for your exploratory analysis (`.ipynb` files).
-- `assets/`: Put your images and logos here.
-- `references.bib`: Manage your citations in BibLaTeX format.
-- `_quarto.yml`: Project configuration and styling.
-- `pyproject.toml`: Project dependency management (use `uv`).
-- `partials/`: Custom LaTeX styling (you shouldn't need to touch this).
-- `docs/`: The output directory, where your `report.pdf` lives.
+## Team
 
-## 💡 Key Features
-- **Strict Formatting**: The PDF output enforces a 2.5cm margin all around and single line spacing to meet submission requirements.
-- **Integrated Analysis**: You can write Python code directly in `report.qmd`.
-- **Code Folding**: In the HTML version, code blocks are folded by default to keep the focus on your writing.
-- **Margin Content**: Use `#| column: margin` to place small plots or code snippets in the right margin.
-- **Embedded Results**: You can embed specific cells from your notebooks into your report using the `{{< embed notebooks/your-notebook.ipynb#cell-label >}}` shortcode. This keeps your main report clean while allowing complex analyses to live in separate files. Note that cells in your notebooks must have `#| label: ...` comments. Note that this does not re-execute cells when you render the report! This takes the latest known output from the source cell. 
-- **Modular Report**: For long reports, you can split your document into multiple files (e.g., `sections/01-intro.qmd`) and pull them together using the `{{< include sections/01-intro.qmd >}}` shortcode in your main `report.qmd`.
-
-## 📝 Submission
-Your final submission must include:
-1. The rendered `report.pdf`.
-2. All source files (`.qmd`, `.ipynb`, `.bib`, etc.) in this git repository.
-3. The `pyproject.toml` and `uv.lock` files to ensure reproducibility.
-
----
-*Chair of Information Systems for Sustainable Society (IS3)*  
-*University of Cologne*
+Niklas Eichholz · Anthony Ge · Yannick Herrmann · Hendrik Mehl

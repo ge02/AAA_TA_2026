@@ -7,11 +7,6 @@ _freeze/
 *.html
 *.docx
 *.tex
-# Exception for partials tex files
-!partials/*.tex
-# Exception for final outputs
-!docs/report.pdf
-!docs/report.html
 
 # LaTeX junk
 *.aux
@@ -73,8 +68,17 @@ data/aggregated/*
 data/results/*
 !data/results/.gitkeep
 
+#ignore files in poi but commit the folder
+data/poi/*
+!data/poi/.gitkeep
+
 #cache
 .cache.sqlite
 
 # ignore generated files by report
 docs/*
+# Exception for partials tex files
+!partials/*.tex
+# Exception for final outputs
+# docs/report.pdf
+# !docs/report.html
