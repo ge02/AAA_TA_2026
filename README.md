@@ -47,10 +47,20 @@ Then each notebook starting from `02_Descriptive_Analysis` runs using our prepro
 
 3. **Fast check if everything compiles:** Just run all notebooks starting from `02_Descriptive_Analysis`, except `03_Predictive_Analysis` without adding any data sets. This method uses sampled datasets that are pushed to the git repository. This does not gurantee senseful outcomes of the notebooks, but serves as a quick check if all notebooks compile using a fraction of the dataset. (see `00_Sample_Data.ipynb`)
 
+## Getting Started
+
+The project is managed with [`uv`](https://github.com/astral-sh/uv) and rendered
+with [Quarto](https://quarto.org/). Quick start:
+
+```bash
+uv sync
+uv run python -m ipykernel install --user --name aaa-team-02 --display-name "Python (AAA Team 02)"
+uv run quarto render report.qmd --to pdf
+```
+
 ## Report
 
-The reports relies on linked graphs from notebooks. This means if a different data sources is used, graphs render different. Or if notebooks are not run to the end or changed the report may not render cleanly. 
-This means we recommend to render the report using our notebook outputs or use the provided data sets from Sciebo.
+The reports relies on linked graphs from notebooks. To get the exact replication of our intended report we recommend to render it using the notebook outputs pushed to this git repo. If the notebooks are run using a different data sources (such as Sample Data), graphs render differently. If notebooks are not run to the end or if they are missing some outputs the report may not render correctly. 
 
 
 ## Methods
@@ -67,24 +77,13 @@ This means we recommend to render the report using our notebook outputs or use t
 report.qmd                      # Main Quarto report that stitches the sections together
 sections/                       # Report text, one file per chapter (problem → conclusion)
 notebooks/                      # All analysis, organized by stage:
-  01_Preprocessing/             # Fetching, cleaning, merging, aggregation
+  01_Preprocessing/             # Fetching, cleaning, merging, aggregation can be skipped if using Sciebo Data or sample data
   02_Descriptive_Analysis/      # Descriptive data analysis
-  03_Predictive_Analysis/       # SVM (and NN) modeling
+  03_Predictive_Analysis/       # SVM and NN modeling
   04_Reinforcement_Learning/
-data/                           # Datasets (download from sciebo; samples included)
+data/                           # Datasets 
 assets/                         # Figures used in the report
 docs/                           # Rendered output (report.pdf)
-```
-
-## Getting Started
-
-The project is managed with [`uv`](https://github.com/astral-sh/uv) and rendered
-with [Quarto](https://quarto.org/). Quick start:
-
-```bash
-uv sync
-uv run python -m ipykernel install --user --name aaa-team-02 --display-name "Python (AAA Team 02)"
-uv run quarto render report.qmd --to pdf
 ```
 
 ## Team
